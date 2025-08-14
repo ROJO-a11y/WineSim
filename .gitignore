@@ -1,0 +1,41 @@
+# --- Unity generated folders ---
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+[Ss]ysInfo/
+UserSettings/
+.Gradle/
+.crashlytics/
+
+# --- Visual Studio / Rider / VSCode ---
+.vs/
+.idea/
+.vscode/
+*.suo
+*.user
+*.userprefs
+*.csproj
+*.unityproj
+*.sln
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+
+# --- Crash/backup/temp files ---
+*.tmp
+*.bak
+*.old
+*.orig
+
+# --- OS junk ---
+.DS_Store
+Thumbs.db
+
+# --- Addressables / Generated cache (optional, safe to ignore) ---
+/ServerData/

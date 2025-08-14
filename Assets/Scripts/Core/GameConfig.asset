@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 994400c1ad111440a8a678e770041b70, type: 3}
+  m_Name: GameConfig
+  m_EditorClassIdentifier: 
+  resetOnPlay: 0
+  vineyardCols: 6
+  vineyardRows: 4
+  productionCols: 6
+  productionRows: 4
+  inventoryCols: 6
+  inventoryRows: 4
+  startingCash: 50000
+  landBasePrice: 3000
+  plantCostPerPlot: 800
+  smallTankPrice: 5000
+  medTankPrice: 12000
+  largeTankPrice: 25000
+  barrelPrice: 900
+  bottlingMachinePrice: 10000
+  grapeWholesalePerKg: 1.2
+  marketIndexMin: 0.8
+  marketIndexMax: 1.2
+  marketStepMax: 0.01
+  secondsPerDay: 0.2
+  daysPerYear: 360
+  offlineCatchupCapDays: 30
+  summerBrixPerDayMin: 0.1
+  summerBrixPerDayMax: 0.4
+  rainBrixPenalty: 0.15
+  yieldPerPlotKg: 1200
+  pHDailyDeltaTowardsTarget: 0.02
+  phenolicDailyGain: 0.8
+  minFermentDays: 7
+  maxFermentDays: 14
+  brixToAlcohol: 0.55
+  barrelVolumeL: 1000
+  barrelOakGainPerDay: 0.15
+  overUnderPenaltyPerDay: 0.2
+  bottleImprovementPerDay: 0.02
+  bottleWhiteDegradePerDay: 0.01

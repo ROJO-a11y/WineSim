@@ -42,6 +42,8 @@ public class InventorySystem : MonoBehaviour
 
     public void AddBottles(WineBatch batch)
     {
+        if (batch == null || string.IsNullOrEmpty(batch.varietyName) || batch.bottles <= 0) return;
+
         string k = Key(batch.varietyName, batch.vintageYear);
         if (!stock.TryGetValue(k, out var e))
         {
@@ -58,8 +60,15 @@ public class InventorySystem : MonoBehaviour
             };
             stock[k] = e;
         }
-        e.bottles += batch.bottles;
-        e.quality = (e.quality + batch.initialQuality) * 0.5f; // blend if multiple batches of same key
+
+        // Weighted-average quality by bottle count
+        int newTotal = e.bottles + batch.bottles;
+        if (newTotal <= 0) newTotal = 1;
+        e.quality = Mathf.Clamp(
+            (e.quality * e.bottles + batch.initialQuality * batch.bottles) / newTotal,
+            0f, 100f
+        );
+        e.bottles = newTotal;
     }
 
     public void TickDaily()
@@ -110,5 +119,70 @@ public class InventorySystem : MonoBehaviour
         return revenue;
     }
 
+    // InventoryPanel expects a TrySell signature; provide it and route to Sell()
+    public bool TrySell(string variety, int vintage, int qty, out int sold, out int revenue)
+    {
+        sold = 0; revenue = 0;
+        if (string.IsNullOrEmpty(variety) || qty <= 0) return false;
+
+        string k = Key(variety, vintage);
+        if (!stock.TryGetValue(k, out var e) || e.bottles <= 0) return false;
+
+        sold = Mathf.Min(qty, e.bottles);
+        if (sold <= 0) return false;
+
+        int pricePerBottle;
+        revenue = Sell(variety, vintage, sold, out pricePerBottle);
+        return revenue > 0;
+    }
+
+    // Alternate name some UIs search for; just forwards to TrySell
+    public bool SellWine(string variety, int vintage, int qty, out int sold, out int revenue)
+    {
+        return TrySell(variety, vintage, qty, out sold, out revenue);
+    }
+
+    // Convenience for UI to show available quantity
+    public int GetCount(string variety, int vintage)
+    {
+        string k = Key(variety, vintage);
+        return stock.TryGetValue(k, out var e) ? e.bottles : 0;
+    }
+
+
+// ========= ID-based selling for InventoryPanel =========
+// Expected key format: the same `id` used to build the inventory list entries.
+// In our case, that's the dictionary key we already use internally: "Variety|Vintage".
+
+public bool TrySell(string id, int count, out int sold, out int revenue)
+{
+    sold = 0; revenue = 0;
+    if (string.IsNullOrEmpty(id) || count <= 0) return false;
+
+    if (!stock.TryGetValue(id, out var e) || e.bottles <= 0) return false;
+
+    sold = Mathf.Min(count, e.bottles);
+    if (sold <= 0) return false;
+
+    // Re-use your existing Sell(variety, vintage, count, out pricePerBottle)
+    int pricePerBottle;
+    revenue = Sell(e.varietyName, e.vintageYear, sold, out pricePerBottle);
+
+    // If empty, remove entry
+    if (stock.TryGetValue(id, out var e2) && e2.bottles <= 0)
+        stock.Remove(id);
+
+    return revenue > 0;
+}
+
+// Alternate signature: return total revenue (InventoryPanel will assume sold=count if rev>0)
+public int Sell(string id, int count)
+{
+    if (string.IsNullOrEmpty(id) || count <= 0) return 0;
+    if (!stock.TryGetValue(id, out var e) || e.bottles <= 0) return 0;
+
+    int pricePerBottle;
+    return Sell(e.varietyName, e.vintageYear, count, out pricePerBottle);
+}
     public IReadOnlyCollection<BottleEntryState> AllStock() => stock.Values;
 }

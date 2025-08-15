@@ -1,0 +1,93 @@
+﻿=== UI HIERARCHY DUMP: InventoryScreen ===
+Scene: SampleScene
+Path:  UI/Canvas/Screens/InventoryScreen
+
+• InventoryScreen  [Image VLG CSF ]
+   Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+   Image: raycastTarget=False color=RGBA(0.321, 0.244, 0.113, 1.000)
+   VLG: padding=(16,16,16,16) spacing=12 controlW/H=False/False expandW/H=True/False
+   CSF: HFit=Unconstrained VFit=Unconstrained
+  • TopRow  [HLG LE ]
+     Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(100.00, 100.00) anchoredPos=(66.00, -66.00)
+     HLG: padding=(0,0,0,0) spacing=12 controlW/H=False/False expandW/H=True/True
+     LE: min=(-1,-1) pref=(-1,120) flex=(-1,-1)
+    • CashText  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(200.00, 50.00) anchoredPos=(100.00, -50.00)
+       TMP_Text: text="Cash: ?" overflow=Overflow wrap=True
+  • StockScroll  [Image ScrollRect LE ]
+     Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(0.00, 0.00) anchoredPos=(16.00, -128.00)
+     Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.000)
+     ScrollRect: vertical=True horizontal=False viewport=UI/Canvas/Screens/InventoryScreen/StockScroll/Viewport content=UI/Canvas/Screens/InventoryScreen/StockScroll/Viewport/Content
+     LE: min=(-1,-1) pref=(-1,-1) flex=(-1,1)
+    • Viewport  [Mask ]
+       Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+       RectMask2D: (enabled)
+      • Content  [VLG CSF ]
+         Rect: anchorMin=(0.00, 1.00) anchorMax=(1.00, 1.00) pivot=(0.50, 1.00) sizeDelta=(0.00, 184.00) anchoredPos=(0.00, 0.00)
+         VLG: padding=(12,12,8,16) spacing=8 controlW/H=True/True expandW/H=True/False
+         CSF: HFit=Unconstrained VFit=PreferredSize
+        • InventoryItemPrefab(Clone)  [Image HLG LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(500.00, 160.00) anchoredPos=(262.00, -88.00)
+           Image: raycastTarget=True color=RGBA(0.957, 0.643, 0.376, 1.000)
+           HLG: padding=(12,12,8,8) spacing=8 controlW/H=True/True expandW/H=True/False
+           LE: min=(500,160) pref=(-1,110) flex=(1,0)
+          • Title  [Text LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(201.73, 180.00) anchoredPos=(112.87, -80.00)
+             LE: min=(-1,180) pref=(-1,-1) flex=(-1,-1)
+             TMP_Text: text="Cabernet Sauvignon 0" overflow=Overflow wrap=True
+          • Info  [Text ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(78.27, 109.61) anchoredPos=(260.87, -80.00)
+             TMP_Text: text="Bottles: 2240
+Quality: 55.3" overflow=Overflow wrap=True
+          • SellBtn  [Button Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(180.00, 80.00) anchoredPos=(398.00, -80.00)
+             Image: raycastTarget=True color=RGBA(0.900, 0.930, 0.980, 1.000)
+             LE: min=(180,80) pref=(140,64) flex=(0,0)
+            • Label  [Text ]
+               Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+               TMP_Text: text="Sell" overflow=Overflow wrap=True
+  • SellModal  [Image ]
+     Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 0.45) pivot=(0.50, 0.00) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+     Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.350)
+    • Panel  [Image VLG ]
+       Rect: anchorMin=(0.10, 0.10) anchorMax=(0.90, 0.90) pivot=(0.50, 0.50) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+       Image: raycastTarget=True color=RGBA(0.970, 0.980, 1.000, 1.000)
+       VLG: padding=(16,16,16,16) spacing=10 controlW/H=False/False expandW/H=True/True
+      • Title  [Text ]
+         Rect: anchorMin=(0.50, 0.50) anchorMax=(0.50, 0.50) pivot=(0.50, 0.50) sizeDelta=(200.00, 50.00) anchoredPos=(0.00, 0.00)
+         TMP_Text: text="Sell" overflow=Overflow wrap=True
+      • MaxText  [Text ]
+         Rect: anchorMin=(0.50, 0.50) anchorMax=(0.50, 0.50) pivot=(0.50, 0.50) sizeDelta=(200.00, 50.00) anchoredPos=(0.00, 0.00)
+         TMP_Text: text="In stock: 0" overflow=Overflow wrap=True
+      • QtyRow  [HLG ]
+         Rect: anchorMin=(0.50, 0.50) anchorMax=(0.50, 0.50) pivot=(0.50, 0.50) sizeDelta=(100.00, 100.00) anchoredPos=(0.00, 0.00)
+         HLG: padding=(0,0,0,0) spacing=8 controlW/H=False/False expandW/H=True/True
+        • QtyLabel  [Text ]
+           Rect: anchorMin=(0.50, 0.50) anchorMax=(0.50, 0.50) pivot=(0.50, 0.50) sizeDelta=(200.00, 50.00) anchoredPos=(0.00, 0.00)
+           TMP_Text: text="Qty:" overflow=Overflow wrap=True
+        • QtyInput  [Image ]
+           Rect: anchorMin=(0.50, 0.50) anchorMax=(0.50, 0.50) pivot=(0.50, 0.50) sizeDelta=(220.00, 64.00) anchoredPos=(0.00, 0.00)
+           Image: raycastTarget=True color=RGBA(1.000, 1.000, 1.000, 1.000)
+          • Text  [Text ]
+             Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(-20.00, -20.00) anchoredPos=(0.00, 0.00)
+             TMP_Text: text="0" overflow=Overflow wrap=False
+      • EstText  [Text ]
+         Rect: anchorMin=(0.50, 0.50) anchorMax=(0.50, 0.50) pivot=(0.50, 0.50) sizeDelta=(200.00, 50.00) anchoredPos=(0.00, 0.00)
+         TMP_Text: text="Est. revenue: $0" overflow=Overflow wrap=True
+      • BtnRow  [HLG ]
+         Rect: anchorMin=(0.50, 0.50) anchorMax=(0.50, 0.50) pivot=(0.50, 0.50) sizeDelta=(100.00, 100.00) anchoredPos=(0.00, 0.00)
+         HLG: padding=(0,0,0,0) spacing=12 controlW/H=False/False expandW/H=True/True
+        • ConfirmBtn  [Button Image LE ]
+           Rect: anchorMin=(0.50, 0.50) anchorMax=(0.50, 0.50) pivot=(0.50, 0.50) sizeDelta=(100.00, 100.00) anchoredPos=(0.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.900, 0.930, 0.980, 1.000)
+           LE: min=(180,80) pref=(-1,-1) flex=(-1,-1)
+          • Label  [Text ]
+             Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+             TMP_Text: text="Sell" overflow=Overflow wrap=True
+        • CancelBtn  [Button Image LE ]
+           Rect: anchorMin=(0.50, 0.50) anchorMax=(0.50, 0.50) pivot=(0.50, 0.50) sizeDelta=(100.00, 100.00) anchoredPos=(0.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.900, 0.930, 0.980, 1.000)
+           LE: min=(180,80) pref=(-1,-1) flex=(-1,-1)
+          • Label  [Text ]
+             Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+             TMP_Text: text="Cancel" overflow=Overflow wrap=True

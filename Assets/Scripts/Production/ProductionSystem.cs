@@ -21,6 +21,16 @@ public class ProductionSystem : MonoBehaviour
 
     void Awake() { I = this; }
 
+    void OnEnable()
+    {
+        if (TimeController.I != null) TimeController.I.OnNewDay += TickDaily;
+    }
+
+    void OnDisable()
+    {
+        if (TimeController.I != null) TimeController.I.OnNewDay -= TickDaily;
+    }
+
     public void InitNewGame()
     {
         tanks.Clear(); barrels.Clear();
@@ -156,28 +166,48 @@ public class ProductionSystem : MonoBehaviour
         var tank = tanks.Find(t => t.id == tankId);
         if (tank == null || !CanRackToBarrel(tank)) return false;
 
-        // find empty barrel (strict batch)
-        foreach (var b in barrels)
+        // liters to move from the tank (strict whole batch)
+        int liters = tank.ferment.liters;
+
+        // pick the smallest empty barrel that fits (capacityL >= liters)
+        int bestIdx = -1;
+        int bestCap = int.MaxValue;
+        for (int i = 0; i < barrels.Count; i++)
         {
-            if (b.aging != null) continue;
-            if (tank.ferment.liters > b.capacityL) continue;
-
-            float fermentCraft = 10f; // base craft
-            var yeast = System.Array.Find(yeasts, y => y.yeastName == tank.ferment.yeastName);
-            if (yeast != null) fermentCraft += yeast.aroma;
-
-            b.aging = new AgingState
-            {
-                varietyName = tank.ferment.varietyName,
-                vintageYear = tank.ferment.vintageYear,
-                liters = tank.ferment.liters,
-                daysInBarrel = 0,
-                craftQuality = fermentCraft
-            };
-            tank.ferment = null;
-            return true;
+            var b = barrels[i];
+            if (b == null) continue;
+            if (b.aging != null) continue;    // occupied
+            if (b.capacityL < liters) continue; // too small
+            if (b.capacityL < bestCap) { bestCap = b.capacityL; bestIdx = i; }
         }
-        return false;
+
+        if (bestIdx < 0) return false; // no empty barrel large enough
+
+        var dest = barrels[bestIdx];
+
+        // Preserve your craft baseline + yeast aroma contribution
+        float fermentCraft = 10f;
+        var yeast = System.Array.Find(yeasts, y => y.yeastName == tank.ferment.yeastName);
+        if (yeast != null) fermentCraft += yeast.aroma;
+
+        dest.aging = new AgingState
+        {
+            varietyName  = tank.ferment.varietyName,
+            vintageYear  = tank.ferment.vintageYear,
+            liters       = liters,
+            daysInBarrel = 0,
+            craftQuality = fermentCraft
+        };
+
+        // Clear the tank after moving the whole batch
+        tank.ferment = null;
+        return true;
+    }
+
+    public bool RackToBarrel(int tankIndex)
+    {
+        if (tankIndex < 0 || tankIndex >= tanks.Count) return false;
+        return RackToBarrel(tanks[tankIndex].id);
     }
 
     public bool CanBottle(BarrelState barrel)

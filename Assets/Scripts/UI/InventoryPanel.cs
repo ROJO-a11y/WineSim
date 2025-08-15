@@ -33,6 +33,11 @@ public class InventoryPanel : MonoBehaviour
 
     private readonly List<InventoryItemUI> items = new();
 
+    // rebuild guarding (avoid list being rebuilt while interacting with modal)
+    private bool _modalOpen;
+    private bool _pendingRebuild;
+    private float _rebuildAt;
+
     void Reset()      { AutoCache(); }
     void OnValidate() { if (!Application.isPlaying) AutoCache(); }
 
@@ -51,7 +56,24 @@ public class InventoryPanel : MonoBehaviour
     void OnNewDay()
     {
         RefreshTop();
-        Rebuild();
+        if (_modalOpen)
+        {
+            _pendingRebuild = true;
+            _rebuildAt = Time.time + 0.05f; // slight debounce
+        }
+        else
+        {
+            Rebuild();
+        }
+    }
+
+    void Update()
+    {
+        if (_pendingRebuild && !_modalOpen && Time.time >= _rebuildAt)
+        {
+            _pendingRebuild = false;
+            Rebuild();
+        }
     }
 
     public void Rebuild()
@@ -90,6 +112,13 @@ public class InventoryPanel : MonoBehaviour
 
         string variety = GetProp(entry, "varietyName", "Wine");
         int vintage = GetProp(entry, "vintageYear", 0);
+
+        // Fallback: if entry didn't serialize an id, build the standard key used by InventorySystem
+        if (string.IsNullOrEmpty(selectedId))
+            selectedId = $"{variety}|{vintage}";
+
+        Debug.Log($"InventoryPanel.OpenSell: id='{selectedId}' variety='{variety}' vintage={vintage} max={selectedMax}", this);
+
         sellTitle?.SetText($"Sell {variety} {vintage}");
 
         maxText?.SetText($"In stock: {selectedMax}");
@@ -124,8 +153,10 @@ public class InventoryPanel : MonoBehaviour
                 {
                     Toast($"Sold {sold} for ${revenue:n0}");
                     CloseSell();
+                    _modalOpen = false;
                     RefreshTop();
-                    Rebuild();
+                    _pendingRebuild = true;
+                    _rebuildAt = Time.time + 0.05f;
                 }
                 else
                 {
@@ -140,11 +171,13 @@ public class InventoryPanel : MonoBehaviour
         }
 
         UpdateEstimate();
+        _modalOpen = true;
         if (sellModal) sellModal.SetActive(true);
     }
 
     public void CloseSell()
     {
+        _modalOpen = false;
         if (sellModal) sellModal.SetActive(false);
     }
 
@@ -170,14 +203,50 @@ public class InventoryPanel : MonoBehaviour
     {
         sold = 0; revenue = 0;
 
+        // 0) Direct route – avoid reflection when possible
+        if (InventorySystem.I != null)
+        {
+            try
+            {
+                // Preferred: exact id-based API
+                if (InventorySystem.I.TrySell(id, count, out sold, out revenue))
+                    return true;
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogWarning($"InventoryPanel.TrySell: direct TrySell(id,count) threw: {ex.Message}");
+            }
+
+            try
+            {
+                // Alternate: int Sell(id,count) returns revenue
+                int rev = InventorySystem.I.Sell(id, count);
+                if (rev > 0) { revenue = rev; sold = count; return true; }
+            }
+            catch {}
+
+            try
+            {
+                // Fallback: if id encodes variety|vintage, route to existing variety/vintage Sell
+                var parts = id.Split('|');
+                if (parts.Length >= 2 && int.TryParse(parts[1], out var vint))
+                {
+                    int pricePerBottle;
+                    int rev = InventorySystem.I.Sell(parts[0], vint, count, out pricePerBottle);
+                    if (rev > 0) { revenue = rev; sold = count; return true; }
+                }
+            }
+            catch {}
+        }
+
+        // 1) Reflection on InventorySystem – your original shapes
         var inv = InventorySystem.I;
         if (inv != null)
         {
-            // Try common method signatures on InventorySystem via reflection
             var type = inv.GetType();
             var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance);
 
-            // 1) bool TrySell(string id, int count, out int sold, out int revenue)
+            // 1a) bool TrySell(string id, int count, out int sold, out int revenue)
             var m = methods.FirstOrDefault(x =>
                 x.Name.ToLower().Contains("sell") &&
                 x.ReturnType == typeof(bool) &&
@@ -191,7 +260,7 @@ public class InventoryPanel : MonoBehaviour
                 return ok;
             }
 
-            // 2) int Sell(string id, int count) -> returns revenue, sold assumed = count (if enough)
+            // 1b) int Sell(string id, int count) -> returns revenue
             m = methods.FirstOrDefault(x =>
                 x.Name.ToLower().Contains("sell") &&
                 x.ReturnType == typeof(int) &&
@@ -202,21 +271,31 @@ public class InventoryPanel : MonoBehaviour
                 int rev = (int)m.Invoke(inv, new object[] { id, count });
                 if (rev > 0) { revenue = rev; sold = count; return true; }
             }
+
+            // Debug what we do see
+            var found = methods.Where(x => x.Name.ToLower().Contains("sell"))
+                               .Select(x => $"{x.Name}({string.Join(",", x.GetParameters().Select(p => p.ParameterType.Name))}) -> {x.ReturnType.Name}");
+            Debug.Log($"InventoryPanel.TrySell: InventorySystem sell-like methods = [{string.Join("; ", found)}]");
         }
 
-        // Try ActionAPI as a last resort: Sell*(string id, int count) -> bool
+        // 2) Try ActionAPI last – a bool Sell*(string id, int count)
         var api = FindFirstObjectByType<ActionAPI>();
         if (api)
         {
             var typeA = api.GetType();
             var m = typeA.GetMethods(BindingFlags.Public | BindingFlags.Instance)
-                .FirstOrDefault(x => x.Name.ToLower().StartsWith("sell") && MatchSig(x, new[] { typeof(string), typeof(int) }));
+                         .FirstOrDefault(x => x.Name.ToLower().StartsWith("sell") && x.ReturnType == typeof(bool) && MatchSig(x, new[] { typeof(string), typeof(int) }));
             if (m != null)
             {
                 bool ok = (bool)m.Invoke(api, new object[] { id, count });
                 if (ok) { sold = count; revenue = Mathf.RoundToInt(count * unitPriceEst); }
                 return ok;
             }
+
+            var foundA = typeA.GetMethods(BindingFlags.Public | BindingFlags.Instance)
+                               .Where(x => x.Name.ToLower().StartsWith("sell"))
+                               .Select(x => $"{x.Name}({string.Join(",", x.GetParameters().Select(p => p.ParameterType.Name))}) -> {x.ReturnType.Name}");
+            Debug.Log($"InventoryPanel.TrySell: ActionAPI sell-like methods = [{string.Join("; ", foundA)}]");
         }
 
         Debug.LogWarning("InventoryPanel: No selling method found on InventorySystem or ActionAPI.");

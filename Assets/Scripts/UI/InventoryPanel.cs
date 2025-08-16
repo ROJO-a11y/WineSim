@@ -32,6 +32,8 @@ public class InventoryPanel : MonoBehaviour
     private float unitPriceEst;
 
     private readonly List<InventoryItemUI> items = new();
+    private bool _isRebuilding;
+    private bool _scrollBuilt;
 
     // rebuild guarding (avoid list being rebuilt while interacting with modal)
     private bool _modalOpen;
@@ -78,23 +80,40 @@ public class InventoryPanel : MonoBehaviour
 
     public void Rebuild()
     {
+        if (_isRebuilding) return;
         if (stockContent == null || stockItemPrefab == null)
         {
             Debug.LogError("InventoryPanel: stockContent or stockItemPrefab not assigned.", this);
             return;
         }
 
-        foreach (Transform c in stockContent) Destroy(c.gameObject);
-        items.Clear();
+        _isRebuilding = true;
 
         var entries = InventorySystem.I?.Serialize() ?? Array.Empty<BottleEntryState>();
-        foreach (var e in entries)
+
+        // Ensure pool size
+        while (items.Count < entries.Length)
         {
             var item = Instantiate(stockItemPrefab, stockContent);
             EnsureItemSizing(item.gameObject);
-            item.Setup(e, this);
             items.Add(item);
         }
+
+        // Update visible rows
+        for (int i = 0; i < entries.Length; i++)
+        {
+            var row = items[i];
+            if (!row.gameObject.activeSelf) row.gameObject.SetActive(true);
+            row.Setup(entries[i], this);
+        }
+
+        // Hide extras
+        for (int i = entries.Length; i < items.Count; i++)
+        {
+            if (items[i].gameObject.activeSelf) items[i].gameObject.SetActive(false);
+        }
+
+        _isRebuilding = false;
     }
 
     private void RefreshTop()
@@ -347,39 +366,46 @@ public class InventoryPanel : MonoBehaviour
         var stockScroll = transform.Find("StockScroll");
         if (stockScroll)
         {
-            var sr = stockScroll.GetComponent<ScrollRect>() ?? stockScroll.gameObject.AddComponent<ScrollRect>();
+            var sr = stockScroll.GetComponent<ScrollRect>();
+            if (!sr) sr = stockScroll.gameObject.AddComponent<ScrollRect>();
             sr.horizontal = false; sr.vertical = true;
 
-            var vp = sr.viewport;
-            if (!vp)
+            if (!_scrollBuilt)
             {
-                var vpt = stockScroll.Find("Viewport") as RectTransform;
-                if (!vpt)
+                var vpt = sr.viewport ? sr.viewport : stockScroll.Find("Viewport") as RectTransform;
+                if (!vpt && !Application.isPlaying)
                 {
+                    // In edit-time only, create missing viewport
                     var go = new GameObject("Viewport", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(RectMask2D));
                     vpt = go.GetComponent<RectTransform>();
                     vpt.SetParent(stockScroll, false);
                 }
-                vpt.anchorMin = Vector2.zero; vpt.anchorMax = Vector2.one; vpt.offsetMin = Vector2.zero; vpt.offsetMax = Vector2.zero;
-                sr.viewport = vpt;
-            }
-            if (!sr.content)
-            {
-                var ct = sr.viewport.Find("Content") as RectTransform;
-                if (!ct)
+                if (vpt)
                 {
-                    var go = new GameObject("Content", typeof(RectTransform));
-                    ct = go.GetComponent<RectTransform>();
-                    ct.SetParent(sr.viewport, false);
+                    vpt.anchorMin = Vector2.zero; vpt.anchorMax = Vector2.one; vpt.offsetMin = Vector2.zero; vpt.offsetMax = Vector2.zero;
+                    sr.viewport = vpt;
+
+                    var ct = sr.content ? sr.content : vpt.Find("Content") as RectTransform;
+                    if (!ct && !Application.isPlaying)
+                    {
+                        var go = new GameObject("Content", typeof(RectTransform));
+                        ct = go.GetComponent<RectTransform>();
+                        ct.SetParent(vpt, false);
+                    }
+                    if (ct)
+                    {
+                        ct.anchorMin = Vector2.zero; ct.anchorMax = Vector2.one; ct.offsetMin = Vector2.zero; ct.offsetMax = Vector2.zero;
+                        var vlg = ct.GetComponent<VerticalLayoutGroup>() ?? ct.gameObject.AddComponent<VerticalLayoutGroup>();
+                        vlg.spacing = 8; vlg.childForceExpandWidth = true; vlg.childForceExpandHeight = false;
+                        var fit = ct.GetComponent<ContentSizeFitter>() ?? ct.gameObject.AddComponent<ContentSizeFitter>();
+                        fit.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+                        sr.content = ct;
+                    }
                 }
-                ct.anchorMin = Vector2.zero; ct.anchorMax = Vector2.one; ct.offsetMin = Vector2.zero; ct.offsetMax = Vector2.zero;
-                var vlg = ct.GetComponent<VerticalLayoutGroup>() ?? ct.gameObject.AddComponent<VerticalLayoutGroup>();
-                vlg.spacing = 8; vlg.childForceExpandWidth = true; vlg.childForceExpandHeight = false;
-                var fit = ct.GetComponent<ContentSizeFitter>() ?? ct.gameObject.AddComponent<ContentSizeFitter>();
-                fit.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-                sr.content = ct;
+                _scrollBuilt = true; // do not create again at runtime
             }
-            stockContent = sr.content;
+
+            stockContent = sr.content ? sr.content : stockContent;
             var le = stockScroll.GetComponent<LayoutElement>() ?? stockScroll.gameObject.AddComponent<LayoutElement>();
             le.flexibleHeight = 1f;
         }

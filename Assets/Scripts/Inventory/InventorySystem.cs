@@ -4,6 +4,7 @@ using System.Collections.Generic;
 [System.Serializable]
 public class BottleEntryState
 {
+    public string id;            // stable key: "Variety|Vintage"
     public string varietyName;
     public int vintageYear;
     public bool isRed;
@@ -29,28 +30,48 @@ public class InventorySystem : MonoBehaviour
     {
         stock.Clear();
         if (s.inventory != null)
-            foreach (var e in s.inventory) stock[Key(e.varietyName, e.vintageYear)] = e;
+        {
+            foreach (var e in s.inventory)
+            {
+                // Ensure vintage and id are populated
+                if (e.vintageYear <= 0 && TimeController.I != null)
+                    e.vintageYear = TimeController.I.Year;
+                var k = Key(e.varietyName, e.vintageYear);
+                if (string.IsNullOrEmpty(e.id)) e.id = k;
+                stock[k] = e;
+            }
+        }
     }
 
     public BottleEntryState[] Serialize()
     {
         var list = new List<BottleEntryState>(stock.Values);
+        // ensure id & vintage are present for UI/Save
+        foreach (var e in list)
+        {
+            if (e.vintageYear <= 0 && TimeController.I != null)
+                e.vintageYear = TimeController.I.Year;
+            if (string.IsNullOrEmpty(e.id))
+                e.id = Key(e.varietyName, e.vintageYear);
+        }
         return list.ToArray();
     }
 
-    private string Key(string v, int y) => $"{v}_{y}";
+    private string Key(string v, int y) => $"{v}|{y}";
 
     public void AddBottles(WineBatch batch)
     {
         if (batch == null || string.IsNullOrEmpty(batch.varietyName) || batch.bottles <= 0) return;
 
-        string k = Key(batch.varietyName, batch.vintageYear);
+        int vintage = batch.vintageYear > 0 ? batch.vintageYear : (TimeController.I ? TimeController.I.Year : 0);
+        string k = Key(batch.varietyName, vintage);
         if (!stock.TryGetValue(k, out var e))
         {
             e = new BottleEntryState
             {
+                id = k,
                 varietyName = batch.varietyName,
-                vintageYear = batch.vintageYear,
+                vintageYear = vintage,
                 isRed = batch.isRed,
                 bottles = 0,
                 quality = batch.initialQuality,
@@ -69,6 +90,8 @@ public class InventorySystem : MonoBehaviour
             0f, 100f
         );
         e.bottles = newTotal;
+        // keep id consistent
+        if (string.IsNullOrEmpty(e.id)) e.id = k;
     }
 
     public void TickDaily()
@@ -77,6 +100,7 @@ public class InventorySystem : MonoBehaviour
         {
             var e = kv.Value;
             var variety = System.Array.Find(varieties, v => v.varietyName == e.varietyName);
+            if (variety == null) continue; // safety: unknown variety
             int age = TimeController.I.Day - e.bottledDay;
 
             if (e.isRed)
@@ -159,18 +183,36 @@ public bool TrySell(string id, int count, out int sold, out int revenue)
     sold = 0; revenue = 0;
     if (string.IsNullOrEmpty(id) || count <= 0) return false;
 
-    if (!stock.TryGetValue(id, out var e) || e.bottles <= 0) return false;
+    // 1) direct key
+    if (!stock.TryGetValue(id, out var e))
+    {
+        // 2) legacy underscore key
+        var legacy = id.Replace('|', '_');
+        if (!stock.TryGetValue(legacy, out e))
+        {
+            // 3) parse id → rebuild key
+            var parts = id.Split('|');
+            if (parts.Length >= 2 && int.TryParse(parts[1], out var vint))
+            {
+                var k2 = Key(parts[0], vint);
+                stock.TryGetValue(k2, out e);
+            }
+        }
+    }
+    if (e == null || e.bottles <= 0) return false;
 
     sold = Mathf.Min(count, e.bottles);
     if (sold <= 0) return false;
 
-    // Re-use your existing Sell(variety, vintage, count, out pricePerBottle)
     int pricePerBottle;
     revenue = Sell(e.varietyName, e.vintageYear, sold, out pricePerBottle);
 
     // If empty, remove entry
-    if (stock.TryGetValue(id, out var e2) && e2.bottles <= 0)
-        stock.Remove(id);
+    var currentKey = id;
+    if (!stock.ContainsKey(currentKey))
+        currentKey = Key(e.varietyName, e.vintageYear);
+    if (stock.TryGetValue(currentKey, out var e2) && e2.bottles <= 0)
+        stock.Remove(currentKey);
 
     return revenue > 0;
 }
@@ -179,7 +221,21 @@ public bool TrySell(string id, int count, out int sold, out int revenue)
 public int Sell(string id, int count)
 {
     if (string.IsNullOrEmpty(id) || count <= 0) return 0;
-    if (!stock.TryGetValue(id, out var e) || e.bottles <= 0) return 0;
+
+    if (!stock.TryGetValue(id, out var e))
+    {
+        var legacy = id.Replace('|', '_');
+        if (!stock.TryGetValue(legacy, out e))
+        {
+            var parts = id.Split('|');
+            if (parts.Length >= 2 && int.TryParse(parts[1], out var vint))
+            {
+                var k2 = Key(parts[0], vint);
+                stock.TryGetValue(k2, out e);
+            }
+        }
+    }
+    if (e == null || e.bottles <= 0) return 0;
 
     int pricePerBottle;
     return Sell(e.varietyName, e.vintageYear, count, out pricePerBottle);

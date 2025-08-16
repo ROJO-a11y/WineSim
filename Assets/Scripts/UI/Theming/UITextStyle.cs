@@ -19,13 +19,38 @@ public class UITextStyle : MonoBehaviour
         if (!theme || !_tmp) return;
 
         _tmp.font = theme.font;
+        _tmp.enableAutoSizing = false;
+        _tmp.fontStyle = FontStyles.Normal;       // reset styles each apply
+        _tmp.fontWeight = FontWeight.Regular;     // use TMP's FontWeight (SemiBold, Bold, etc.)
+
         switch(kind)
         {
-            case Kind.Heading1: _tmp.fontSize = theme.h1; _tmp.color = theme.textPrimary; _tmp.fontStyle = FontStyles.Bold; break;
-            case Kind.Heading2: _tmp.fontSize = theme.h2; _tmp.color = theme.textPrimary; _tmp.fontStyle = FontStyles.SemiBold; break;
-            case Kind.Body:     _tmp.fontSize = theme.body; _tmp.color = theme.textPrimary; _tmp.fontStyle = FontStyles.Normal; break;
-            case Kind.Caption:  _tmp.fontSize = theme.caption; _tmp.color = theme.textPrimary; _tmp.fontStyle = FontStyles.Italic; break;
-            case Kind.Muted:    _tmp.fontSize = theme.body; _tmp.color = theme.textMuted; _tmp.fontStyle = FontStyles.Normal; break;
+            case Kind.Heading1:
+                _tmp.fontSize = theme.h1;
+                _tmp.color = theme.textPrimary;
+                _tmp.fontWeight = FontWeight.Bold;
+                break;
+            case Kind.Heading2:
+                _tmp.fontSize = theme.h2;
+                _tmp.color = theme.textPrimary;
+                _tmp.fontWeight = FontWeight.SemiBold;   // <-- was FontStyles.SemiBold (invalid)
+                break;
+            case Kind.Body:
+                _tmp.fontSize = theme.body;
+                _tmp.color = theme.textPrimary;
+                _tmp.fontWeight = FontWeight.Regular;
+                break;
+            case Kind.Caption:
+                _tmp.fontSize = theme.caption;
+                _tmp.color = theme.textPrimary;
+                _tmp.fontStyle = FontStyles.Italic;
+                _tmp.fontWeight = FontWeight.Regular;
+                break;
+            case Kind.Muted:
+                _tmp.fontSize = theme.body;
+                _tmp.color = theme.textMuted;
+                _tmp.fontWeight = FontWeight.Regular;
+                break;
         }
     }
 }

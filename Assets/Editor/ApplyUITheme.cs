@@ -21,6 +21,8 @@ public static class ApplyUITheme
         foreach (var img in root.GetComponentsInChildren<Image>(true))
         {
             var go = img.gameObject;
+            // Skip dynamic vineyard tiles (and their children) so gameplay colors aren't overridden
+            if (go.GetComponentInParent<VineyardTileUI>() != null) continue;
             bool isBtn = go.GetComponent<Button>();
             bool isScroll = go.GetComponent<ScrollRect>();
             bool isViewport = go.name == "Viewport";

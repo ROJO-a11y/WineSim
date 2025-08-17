@@ -104,7 +104,7 @@ public class InventoryPanel : MonoBehaviour
         {
             var row = items[i];
             if (!row.gameObject.activeSelf) row.gameObject.SetActive(true);
-            row.Setup(entries[i], this);
+            row.Setup(entries[i], OpenSell);
         }
 
         // Hide extras
@@ -126,20 +126,18 @@ public class InventoryPanel : MonoBehaviour
     public void OpenSell(BottleEntryState entry)
     {
         selected = entry;
-        selectedId = GetProp(entry, "id", "");
         selectedMax = Mathf.Max(0, GetProp(entry, "bottles", 0));
 
-        string variety = GetProp(entry, "varietyName", "Wine");
-        int vintage = GetProp(entry, "vintageYear", 0);
+        string variety   = GetProp(entry, "varietyName", "Wine");
+        int vintageRaw   = GetProp(entry, "vintageYear", 0);
+        int vintage      = ResolveVintageYear(vintageRaw);
 
-        // Fallback: if entry didn't serialize an id, build the standard key used by InventorySystem
-        if (string.IsNullOrEmpty(selectedId))
-            selectedId = $"{variety}|{vintage}";
+        // Always build a safe ID (avoids "|0" which fails lookup in backend)
+        selectedId = BuildIdForEntry(entry);
 
         Debug.Log($"InventoryPanel.OpenSell: id='{selectedId}' variety='{variety}' vintage={vintage} max={selectedMax}", this);
 
         sellTitle?.SetText($"Sell {variety} {vintage}");
-
         maxText?.SetText($"In stock: {selectedMax}");
 
         // Best-effort unit price estimate
@@ -168,7 +166,9 @@ public class InventoryPanel : MonoBehaviour
                 int q = ParseQty(qtyInput?.text, 0, selectedMax);
                 if (q <= 0) { Toast("Enter a quantity > 0"); return; }
 
-                if (TrySell(selectedId, q, out int sold, out int revenue))
+                // Rebuild a safe ID at click time in case data changed
+                var safeId = BuildIdForEntry(selected);
+                if (TrySell(safeId, q, out int sold, out int revenue))
                 {
                     Toast($"Sold {sold} for ${revenue:n0}");
                     CloseSell();
@@ -258,7 +258,7 @@ public class InventoryPanel : MonoBehaviour
             catch {}
         }
 
-        // 1) Reflection on InventorySystem – your original shapes
+        // 1) Reflection on InventorySystem – sell-like methods
         var inv = InventorySystem.I;
         if (inv != null)
         {
@@ -267,7 +267,7 @@ public class InventoryPanel : MonoBehaviour
 
             // 1a) bool TrySell(string id, int count, out int sold, out int revenue)
             var m = methods.FirstOrDefault(x =>
-                x.Name.ToLower().Contains("sell") &&
+                x.Name.IndexOf("sell", StringComparison.OrdinalIgnoreCase) >= 0 &&
                 x.ReturnType == typeof(bool) &&
                 MatchSig(x, new[] { typeof(string), typeof(int), typeof(int).MakeByRefType(), typeof(int).MakeByRefType() })
             );
@@ -281,7 +281,7 @@ public class InventoryPanel : MonoBehaviour
 
             // 1b) int Sell(string id, int count) -> returns revenue
             m = methods.FirstOrDefault(x =>
-                x.Name.ToLower().Contains("sell") &&
+                x.Name.IndexOf("sell", StringComparison.OrdinalIgnoreCase) >= 0 &&
                 x.ReturnType == typeof(int) &&
                 MatchSig(x, new[] { typeof(string), typeof(int) })
             );
@@ -292,7 +292,7 @@ public class InventoryPanel : MonoBehaviour
             }
 
             // Debug what we do see
-            var found = methods.Where(x => x.Name.ToLower().Contains("sell"))
+            var found = methods.Where(x => x.Name.IndexOf("sell", StringComparison.OrdinalIgnoreCase) >= 0)
                                .Select(x => $"{x.Name}({string.Join(",", x.GetParameters().Select(p => p.ParameterType.Name))}) -> {x.ReturnType.Name}");
             Debug.Log($"InventoryPanel.TrySell: InventorySystem sell-like methods = [{string.Join("; ", found)}]");
         }
@@ -303,7 +303,7 @@ public class InventoryPanel : MonoBehaviour
         {
             var typeA = api.GetType();
             var m = typeA.GetMethods(BindingFlags.Public | BindingFlags.Instance)
-                         .FirstOrDefault(x => x.Name.ToLower().StartsWith("sell") && x.ReturnType == typeof(bool) && MatchSig(x, new[] { typeof(string), typeof(int) }));
+                         .FirstOrDefault(x => x.Name.StartsWith("Sell", StringComparison.OrdinalIgnoreCase) && x.ReturnType == typeof(bool) && MatchSig(x, new[] { typeof(string), typeof(int) }));
             if (m != null)
             {
                 bool ok = (bool)m.Invoke(api, new object[] { id, count });
@@ -312,7 +312,7 @@ public class InventoryPanel : MonoBehaviour
             }
 
             var foundA = typeA.GetMethods(BindingFlags.Public | BindingFlags.Instance)
-                               .Where(x => x.Name.ToLower().StartsWith("sell"))
+                               .Where(x => x.Name.StartsWith("Sell", StringComparison.OrdinalIgnoreCase))
                                .Select(x => $"{x.Name}({string.Join(",", x.GetParameters().Select(p => p.ParameterType.Name))}) -> {x.ReturnType.Name}");
             Debug.Log($"InventoryPanel.TrySell: ActionAPI sell-like methods = [{string.Join("; ", foundA)}]");
         }
@@ -337,24 +337,136 @@ public class InventoryPanel : MonoBehaviour
     public T GetProp<T>(object obj, string name, T fallback)
     {
         if (obj == null) return fallback;
-        var pi = obj.GetType().GetField(name, BindingFlags.Public | BindingFlags.Instance);
-        if (pi != null && pi.FieldType == typeof(T)) return (T)pi.GetValue(obj);
 
-        var prop = obj.GetType().GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
-        if (prop != null && typeof(T).IsAssignableFrom(prop.PropertyType))
-            return (T)prop.GetValue(obj);
+        // fields first
+        var fi = obj.GetType().GetField(name, BindingFlags.Public | BindingFlags.Instance);
+        if (fi != null && typeof(T).IsAssignableFrom(fi.FieldType))
+            return (T)fi.GetValue(obj);
+
+        // properties next
+        var pi = obj.GetType().GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
+        if (pi != null && typeof(T).IsAssignableFrom(pi.PropertyType))
+            return (T)pi.GetValue(obj);
 
         // allow common numeric conversions
-        if (prop != null && prop.PropertyType.IsValueType && typeof(T) == typeof(float))
+        if (pi != null && pi.PropertyType.IsValueType && typeof(T) == typeof(float))
         {
-            try { return (T)Convert.ChangeType(prop.GetValue(obj), typeof(T)); } catch { }
+            try { return (T)Convert.ChangeType(pi.GetValue(obj), typeof(T)); } catch { }
         }
-        if (prop != null && prop.PropertyType.IsValueType && typeof(T) == typeof(int))
+        if (pi != null && pi.PropertyType.IsValueType && typeof(T) == typeof(int))
         {
-            try { return (T)Convert.ChangeType(prop.GetValue(obj), typeof(T)); } catch { }
+            try { return (T)Convert.ChangeType(pi.GetValue(obj), typeof(T)); } catch { }
         }
 
         return fallback;
+    }
+
+    // --- Config/Vintage/ID helpers ---
+
+    // Try to extract a reasonable "start year" from a ScriptableObject that looks like GameConfig.
+    private int ExtractStartYearFromConfigObject(object cfgObj)
+    {
+        if (cfgObj == null) return 0;
+        var t = cfgObj.GetType();
+
+        // 1) Scan public instance INT fields with name patterns
+        foreach (var f in t.GetFields(BindingFlags.Public | BindingFlags.Instance))
+        {
+            if (f.FieldType != typeof(int)) continue;
+            var n = f.Name.ToLowerInvariant();
+            if ((n.Contains("start") && n.Contains("year")) || n == "startyear" || n == "startingyear" || n == "baseyear" || n == "yearstart" || n == "seedyear")
+            {
+                int val = (int)f.GetValue(cfgObj);
+                if (val > 0) return val;
+            }
+        }
+
+        // 2) Scan public instance INT properties with name patterns
+        foreach (var p in t.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+        {
+            if (p.PropertyType != typeof(int)) continue;
+            var n = p.Name.ToLowerInvariant();
+            if ((n.Contains("start") && n.Contains("year")) || n == "startyear" || n == "startingyear" || n == "baseyear" || n == "yearstart" || n == "seedyear")
+            {
+                try
+                {
+                    int val = (int)(p.GetValue(cfgObj) ?? 0);
+                    if (val > 0) return val;
+                }
+                catch { }
+            }
+        }
+
+        return 0;
+    }
+
+    // Find startYear from whatever field/property holds a GameConfig on the scene holder, or from any loaded GameConfig asset.
+    private int GetStartYearFromConfig()
+    {
+        int start = 0;
+
+        // Prefer a holder in-scene
+        var holder = FindFirstObjectByType<GameConfigHolder>();
+        if (holder != null)
+        {
+            // Try a public instance FIELD of type GameConfig
+            var gf = holder.GetType()
+                .GetFields(BindingFlags.Public | BindingFlags.Instance)
+                .FirstOrDefault(f => typeof(GameConfig).IsAssignableFrom(f.FieldType));
+            if (gf != null)
+            {
+                var cfg = gf.GetValue(holder);
+                start = ExtractStartYearFromConfigObject(cfg);
+            }
+
+            // Or a public instance PROPERTY of type GameConfig
+            if (start <= 0)
+            {
+                var gp = holder.GetType()
+                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .FirstOrDefault(p => typeof(GameConfig).IsAssignableFrom(p.PropertyType));
+                if (gp != null)
+                {
+                    var cfg = gp.GetValue(holder);
+                    start = ExtractStartYearFromConfigObject(cfg);
+                }
+            }
+        }
+
+        // Last resort: any loaded GameConfig ScriptableObject
+        if (start <= 0)
+        {
+            // Use name-based discovery to avoid a hard dependency on a 'startYear' field/property
+            var anyConfigs = Resources.FindObjectsOfTypeAll<ScriptableObject>()
+                                      .Where(o => o != null && o.GetType().Name == "GameConfig")
+                                      .ToArray();
+            foreach (var cfg in anyConfigs)
+            {
+                start = ExtractStartYearFromConfigObject(cfg);
+                if (start > 0) break;
+            }
+        }
+
+        return start;
+    }
+
+    private int ResolveVintageYear(int candidate)
+    {
+        if (candidate > 0) return candidate;
+
+        int startYear = GetStartYearFromConfig();
+        int year = TimeController.I ? TimeController.I.Year : 0; // if 0-based, startYear+Year => calendar
+        int guess = (startYear > 0) ? startYear + year : year;
+        if (guess <= 0) guess = 1;
+        return guess;
+    }
+
+    private string BuildIdForEntry(BottleEntryState e)
+    {
+        if (e == null) return null;
+        string variety = GetProp(e, "varietyName", "Wine");
+        int vint = ResolveVintageYear(GetProp(e, "vintageYear", 0));
+        return $"{variety}|{vint}";
     }
 
     private void AutoCache()
@@ -410,14 +522,14 @@ public class InventoryPanel : MonoBehaviour
             le.flexibleHeight = 1f;
         }
 
-        // Sell modal
-        sellModal     = sellModal     ? sellModal     : transform.Find("SellModal")?.gameObject;
-        sellTitle     = sellTitle     ? sellTitle     : transform.Find("SellModal/Title")?.GetComponent<TMP_Text>();
-        qtyInput      = qtyInput      ? qtyInput      : transform.Find("SellModal/QtyInput")?.GetComponent<TMP_InputField>();
-        maxText       = maxText       ? maxText       : transform.Find("SellModal/MaxText")?.GetComponent<TMP_Text>();
-        estText       = estText       ? estText       : transform.Find("SellModal/EstText")?.GetComponent<TMP_Text>();
-        confirmSellBtn= confirmSellBtn? confirmSellBtn: transform.Find("SellModal/ConfirmBtn")?.GetComponent<Button>();
-        cancelSellBtn = cancelSellBtn ? cancelSellBtn : transform.Find("SellModal/CancelBtn")?.GetComponent<Button>();
+        // Sell modal (paths left as-is to match your current hierarchy)
+        sellModal      = sellModal      ? sellModal      : transform.Find("SellModal")?.gameObject;
+        sellTitle      = sellTitle      ? sellTitle      : transform.Find("SellModal/Title")?.GetComponent<TMP_Text>();
+        qtyInput       = qtyInput       ? qtyInput       : transform.Find("SellModal/QtyInput")?.GetComponent<TMP_InputField>();
+        maxText        = maxText        ? maxText        : transform.Find("SellModal/MaxText")?.GetComponent<TMP_Text>();
+        estText        = estText        ? estText        : transform.Find("SellModal/EstText")?.GetComponent<TMP_Text>();
+        confirmSellBtn = confirmSellBtn ? confirmSellBtn : transform.Find("SellModal/ConfirmBtn")?.GetComponent<Button>();
+        cancelSellBtn  = cancelSellBtn  ? cancelSellBtn  : transform.Find("SellModal/CancelBtn")?.GetComponent<Button>();
 
         // Default hide modal
         if (sellModal) sellModal.SetActive(false);

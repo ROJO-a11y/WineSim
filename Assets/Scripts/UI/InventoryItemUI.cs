@@ -1,44 +1,84 @@
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class InventoryItemUI : MonoBehaviour
 {
-    [SerializeField] TMP_Text title;
-    [SerializeField] TMP_Text info;
-    [SerializeField] Button sellBtn;
+    [Header("Refs")]
+    public TMP_Text Title;
+    public TMP_Text Info;
+    public Button SellButton;
 
-    public string Id { get; private set; }
-    private BottleEntryState state;
-    private InventoryPanel panel;
+    // current data + callback
+    BottleEntryState _entry;
+    Action<BottleEntryState> _onSell;
 
-    public void Setup(BottleEntryState s, InventoryPanel panel)
+    void Awake()
     {
-        this.panel = panel;
-        this.state = s;
+        // Fallback auto-cache so prefab renames don't break
+        if (!Title)     Title     = transform.Find("Title")?.GetComponent<TMP_Text>();
+        if (!Info)      Info      = transform.Find("Info")?.GetComponent<TMP_Text>();
+        if (!SellButton)SellButton= transform.Find("SellBtn")?.GetComponent<Button>();
+    }
 
-        Id = panel.GetProp(s, "id", Id);
+    public void Setup(BottleEntryState entry, Action<BottleEntryState> onSell)
+    {
+        _entry  = entry;
+        _onSell = onSell;
+        Refresh();
 
-        // Build display text via safe getters (reflection)
-        string variety = panel.GetProp(s, "varietyName", "Wine");
-        int vintage    = panel.GetProp(s, "vintageYear", 0);
-        int bottles    = panel.GetProp(s, "bottles", 0);
-        float quality  = panel.GetProp(s, "qualityScore", panel.GetProp(s, "quality", 0f));
-
-        title?.SetText($"{variety} {vintage}");
-        info?.SetText($"Bottles: {bottles}\nQuality: {quality:0.0}");
-
-        if (sellBtn)
+        // Rebind listener each setup (pool-safe)
+        if (SellButton)
         {
-            sellBtn.onClick.RemoveAllListeners();
-            sellBtn.onClick.AddListener(() => panel.OpenSell(state));
-            sellBtn.interactable = bottles > 0;
+            SellButton.onClick.RemoveAllListeners();
+            SellButton.onClick.AddListener(() =>
+            {
+                // debug to confirm wiring
+                Debug.Log($"InventoryItemUI: Sell clicked → {_entry?.id}", this);
+                _onSell?.Invoke(_entry);
+            });
+
+            SellButton.interactable = (_entry != null && (_entry.bottles > 0));
         }
     }
 
-    // Optional convenience for builder wiring
-    public void __EditorAssign(TMP_Text t, TMP_Text i, Button b)
+    public void Refresh()
     {
-        title = t; info = i; sellBtn = b;
+        if (_entry == null) return;
+
+        string variety = string.IsNullOrEmpty(_entry.varietyName) ? "Wine" : _entry.varietyName;
+        int vintage    = _entry.vintageYear;
+        float q        = _entry.quality;
+
+        if (Title) Title.text = $"{variety} {vintage}";
+        if (Info)  Info.text  = $"Bottles: {_entry.bottles}\nQuality: {q:0.0}";
     }
+#if UNITY_EDITOR
+    // Flexible Editor wiring helper used by WineSimInventoryUIBuilder
+    public void __EditorAssign(Transform root = null)
+    {
+        if (root == null) root = this.transform;
+        if (!Title)      Title      = root.Find("Title")?.GetComponent<TMPro.TMP_Text>();
+        if (!Info)       Info       = root.Find("Info")?.GetComponent<TMPro.TMP_Text>();
+        if (!SellButton) SellButton = root.Find("SellBtn")?.GetComponent<UnityEngine.UI.Button>()
+                                    ?? root.GetComponentInChildren<UnityEngine.UI.Button>(true);
+        UnityEditor.EditorUtility.SetDirty(this);
+    }
+
+    public void __EditorAssign(TMPro.TMP_Text title, TMPro.TMP_Text info, UnityEngine.UI.Button sell)
+    {
+        Title = title; Info = info; SellButton = sell;
+        UnityEditor.EditorUtility.SetDirty(this);
+    }
+
+    public void __EditorAssign(UnityEngine.GameObject titleGO, UnityEngine.GameObject infoGO, UnityEngine.GameObject sellGO)
+    {
+        __EditorAssign(
+            titleGO ? titleGO.GetComponent<TMPro.TMP_Text>() : null,
+            infoGO  ? infoGO.GetComponent<TMPro.TMP_Text>() : null,
+            sellGO  ? sellGO.GetComponent<UnityEngine.UI.Button>() : null
+        );
+    }
+#endif
 }

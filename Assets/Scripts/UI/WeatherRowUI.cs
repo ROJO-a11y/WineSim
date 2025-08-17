@@ -118,7 +118,7 @@ public class WeatherRowUI : MonoBehaviour
         {
             if (f.FieldType != typeof(int)) continue;
             var n = f.Name.ToLowerInvariant();
-            if ((n.Contains("start") && n.contains("year")) || n=="startyear" || n=="startingyear" || n=="baseyear")
+            if ((n.Contains("start") && n.Contains("year")) || n=="startyear" || n=="startingyear" || n=="baseyear")
                 return (int)f.GetValue(cfg);
         }
         // properties

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 /// <summary>
 /// Stats screen UI
@@ -42,12 +43,20 @@ public class StatsPanel : MonoBehaviour
     void OnEnable()
     {
         AutoCache();
-        BuildAll();
+        StartCoroutine(BuildAllDeferred());
         if (TimeController.I) TimeController.I.OnNewDay += BuildAll;
     }
     void OnDisable()
     {
         if (TimeController.I) TimeController.I.OnNewDay -= BuildAll;
+    }
+
+    private IEnumerator BuildAllDeferred()
+    {
+        // wait for one frame so RectTransforms get correct sizes
+        yield return null;
+        yield return new WaitForEndOfFrame();
+        BuildAll();
     }
 
     private void BuildAll()
@@ -81,6 +90,9 @@ public class StatsPanel : MonoBehaviour
         if (bottlesTitle) bottlesTitle.text = "Inventory bottles (last 180d)";
         if (bottlesAxisHint) bottlesAxisHint.text = "weeks";
         BuildBars(bottlesChartArea, botAgg, bottlesBarColor);
+
+        if (revenueChartArea) LayoutRebuilder.ForceRebuildLayoutImmediate(revenueChartArea);
+        if (bottlesChartArea) LayoutRebuilder.ForceRebuildLayoutImmediate(bottlesChartArea);
     }
 
     // --- chart helpers ---
@@ -108,8 +120,37 @@ public class StatsPanel : MonoBehaviour
     {
         if (!area) return;
 
+        // Ensure/prepare a dedicated "Bars" container under the area
+        var bars = area.Find("Bars") as RectTransform;
+        if (!bars)
+        {
+            var go = new GameObject("Bars", typeof(RectTransform));
+            bars = go.GetComponent<RectTransform>();
+            bars.SetParent(area, false);
+        }
+
         // Clear previous bars
-        for (int i = area.childCount - 1; i >= 0; i--) Destroy(area.GetChild(i).gameObject);
+        for (int i = bars.childCount - 1; i >= 0; i--) Destroy(bars.GetChild(i).gameObject);
+
+        // Configure the Bars container to lay out horizontally along the bottom
+        var hlg = bars.GetComponent<HorizontalLayoutGroup>() ?? bars.gameObject.AddComponent<HorizontalLayoutGroup>();
+        hlg.spacing = barSpacing;
+        hlg.childControlWidth = true;
+        hlg.childControlHeight = false;   // we control bar height via LayoutElement per-bar
+        hlg.childForceExpandWidth = false;
+        hlg.childForceExpandHeight = false;
+        hlg.childAlignment = TextAnchor.LowerLeft;
+
+        var fit = bars.GetComponent<ContentSizeFitter>() ?? bars.gameObject.AddComponent<ContentSizeFitter>();
+        fit.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+        fit.verticalFit   = ContentSizeFitter.FitMode.Unconstrained;
+
+        // Bars container anchors to left-bottom, full height of chart area
+        bars.anchorMin = new Vector2(0, 0);
+        bars.anchorMax = new Vector2(0, 1);
+        bars.pivot     = new Vector2(0, 0);
+        bars.offsetMin = new Vector2(barSpacing, 0);
+        bars.offsetMax = new Vector2(0, 0);
 
         if (values == null || values.Length == 0) return;
 
@@ -117,28 +158,39 @@ public class StatsPanel : MonoBehaviour
         for (int i = 0; i < values.Length; i++) if (values[i] > max) max = values[i];
         if (max <= 0f) max = 1f;
 
-        var rect = area.rect;
-        float availableW = Mathf.Max(0f, rect.width - (values.Length + 1) * barSpacing);
+        // Determine a good bar width based on available area width
+        var rect = area.rect; // after deferred frame, this should be valid
+        float availableW = rect.width - (values.Length + 1) * barSpacing;
         float w = values.Length > 0 ? availableW / values.Length : 0f;
         w = Mathf.Clamp(w, minBarWidth, maxBarWidth);
 
-        float x = barSpacing;
+        float chartH = Mathf.Max(0f, rect.height - chartTopPadding);
+
         for (int i = 0; i < values.Length; i++)
         {
-            float h = (rect.height - chartTopPadding) * (values[i] / max);
-            var go = new GameObject($"Bar_{i}", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
-            go.transform.SetParent(area, false);
+            float h = chartH * (values[i] / max);
+
+            var go = new GameObject($"Bar_{i}", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(LayoutElement));
+            go.transform.SetParent(bars, false);
+
             var rt = (RectTransform)go.transform;
             rt.anchorMin = new Vector2(0, 0);
             rt.anchorMax = new Vector2(0, 0);
-            rt.pivot = new Vector2(0, 0);
-            rt.anchoredPosition = new Vector2(x, 0);
+            rt.pivot = new Vector2(0.5f, 0f);
             rt.sizeDelta = new Vector2(w, h);
+
+            var le = go.GetComponent<LayoutElement>();
+            le.preferredWidth = w;
+            le.flexibleWidth = 0f;
+            le.preferredHeight = h;   // HLG childControlHeight=false -> height from LE
+            le.flexibleHeight = 0f;
+
             var img = go.GetComponent<Image>();
             img.color = color;
-
-            x += w + barSpacing;
         }
+
+        // Ensure layout refresh now that we rebuilt bars
+        LayoutRebuilder.ForceRebuildLayoutImmediate(bars);
     }
 
     // --- auto-wire minimal UI ---

@@ -36,6 +36,10 @@ public class GameConfig : ScriptableObject
     public int daysPerYear = 360;          // arcade-y year
     public int offlineCatchupCapDays = 30; // max 1 month
 
+    [Header("Calendar")]
+    [Tooltip("Calendar start year used for vintages, e.g., 2025.")]
+    public int startYear = 2025;   // <— NEW
+
     [Header("Vineyard Growth")]
     public float summerBrixPerDayMin = 0.10f;
     public float summerBrixPerDayMax = 0.40f;

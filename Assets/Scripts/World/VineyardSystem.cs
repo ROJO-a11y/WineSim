@@ -16,6 +16,16 @@ public class VineyardSystem : MonoBehaviour
     // World state (rows*cols)
     public VineyardTileState[] Tiles { get; private set; }
 
+    // Compute a calendar vintage year = GameConfig.startYear + TimeController.Year (with guards)
+    private int GetCalendarYear()
+    {
+        int baseYear = (cfg != null) ? cfg.startYear : 0; // expects GameConfig.startYear
+        int yearIdx  = (TimeController.I != null) ? TimeController.I.Year : 0;
+        int calendar = (baseYear > 0 ? baseYear : 0) + yearIdx;
+        if (calendar <= 0) calendar = yearIdx; // final guard if config not set
+        return calendar;
+    }
+
     void Awake() { I = this; }
 
     // ---------------------------------------------------------------------
@@ -72,7 +82,7 @@ public class VineyardSystem : MonoBehaviour
         t.pH = 3.2f;
         t.phenolic = 10f;
         t.yieldKg = cfg.yieldPerPlotKg;
-        t.vintageYear = TimeController.I != null ? TimeController.I.Year : 0;
+        t.vintageYear = GetCalendarYear();
         return true;
     }
 
@@ -148,31 +158,36 @@ public class VineyardSystem : MonoBehaviour
     /// Create a grape batch from a plot and reset season metrics.
     /// Caller (ActionAPI/ProductionSystem) decides whether it fits a tank or sells wholesale.
     /// </summary>
-    public GrapeBatch Harvest(int index)
+public GrapeBatch Harvest(int index)
+{
+    if (!InRange(index)) return null;
+    var t = Tiles[index];
+    var variety = GetVariety(t.plantedVariety);
+    if (variety == null) return null;
+
+    // Neem de jaarwaarde direct van de tijdlijn (fallback: wat er op de tile stond)
+    int harvestYear = GetCalendarYear();
+
+    var batch = new GrapeBatch
     {
-        if (!InRange(index)) return null;
-        var t = Tiles[index];
-        var variety = GetVariety(t.plantedVariety);
-        if (variety == null) return null;
+        varietyName = t.plantedVariety,
+        vintageYear = harvestYear,   // <-- was: t.vintageYear
+        brix       = t.brix,
+        pH         = t.pH,
+        phenolic   = t.phenolic,
+        kg         = Mathf.RoundToInt(t.yieldKg)
+    };
 
-        var batch = new GrapeBatch
-        {
-            varietyName = t.plantedVariety,
-            vintageYear = t.vintageYear,
-            brix = t.brix,
-            pH = t.pH,
-            phenolic = t.phenolic,
-            kg = Mathf.RoundToInt(t.yieldKg)
-        };
+    // Reset plot voor volgend seizoen
+    t.daysSincePlanting = 0;
+    t.brix = 12f; t.pH = 3.2f; t.phenolic = 10f;
+    t.yieldKg = cfg.yieldPerPlotKg;
 
-        // Reset plot metrics for next season (vine remains planted)
-        t.daysSincePlanting = 0;
-        t.brix = 12f; t.pH = 3.2f; t.phenolic = 10f;
-        t.yieldKg = cfg.yieldPerPlotKg;
-        t.vintageYear = TimeController.I != null ? TimeController.I.Year : t.vintageYear;
+    // Optioneel: tile bijwerken naar het huidige oogstjaar
+    t.vintageYear = harvestYear;
 
-        return batch;
-    }
+    return batch;
+}
 
     // ---------------------------------------------------------------------
     // UI helpers

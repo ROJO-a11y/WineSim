@@ -35,4 +35,4 @@ MonoBehaviour:
   btnHeightS: 48
   btnHeightM: 64
   btnHeightL: 80
-  btnMinWidth: 160
+  btnMinWidth: 120

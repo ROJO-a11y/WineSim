@@ -91,7 +91,7 @@ public class VineyardSystem : MonoBehaviour
     // ---------------------------------------------------------------------
     public void TickDaily()
     {
-        var w = WeatherSystem.I != null ? WeatherSystem.I.Today : default;
+        DailyWeather w = WeatherSystem.I != null ? WeatherSystem.I.Today() : default(DailyWeather);
         int dayOfYear = TimeController.I != null ? TimeController.I.DayOfYear : 0;
         int daysPerYear = Mathf.Max(1, cfg.daysPerYear);
 
@@ -110,7 +110,7 @@ public class VineyardSystem : MonoBehaviour
 
             // Brix growth (reduced by rain)
             float brixGain = Mathf.Lerp(cfg.summerBrixPerDayMin, cfg.summerBrixPerDayMax, season01);
-            if (w.rainfall > 0f) brixGain -= cfg.rainBrixPenalty;
+            if (w.rainMm > 0.01f) brixGain -= cfg.rainBrixPenalty;
             brixGain = Mathf.Max(0.01f, brixGain);
             t.brix = Mathf.Max(0f, t.brix + brixGain);
 
@@ -118,8 +118,9 @@ public class VineyardSystem : MonoBehaviour
             t.pH = Mathf.Lerp(t.pH, variety.targetpH, Mathf.Clamp01(cfg.pHDailyDeltaTowardsTarget));
 
             // Phenolic ripeness rises with warmth/sun
-            float tempFactor = Mathf.Clamp01((w.temperature - 10f) / 20f); // 0 at 10°C, ~1 at 30°C
-            float phenGain = cfg.phenolicDailyGain * tempFactor * Mathf.Clamp01(w.sun);
+            float tempFactor = Mathf.Clamp01((w.tAvgC - 10f) / 20f); // 0 at 10°C, ~1 at 30°C
+            float sunFac = Mathf.InverseLerp(2f, 14f, w.sunHours); // 0 at 2h, 1 near 14h
+            float phenGain = cfg.phenolicDailyGain * tempFactor * sunFac;
             t.phenolic = Mathf.Clamp(t.phenolic + phenGain, 0f, 100f);
         }
     }

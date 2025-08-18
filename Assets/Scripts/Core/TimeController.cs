@@ -88,17 +88,15 @@ public class TimeController : MonoBehaviour
 
     private void SimulateOneDay()
     {
-        // Daily progression order
-        WeatherSystem.I.TickDaily(DayOfYear);
-        VineyardSystem.I.TickDaily();
-        ProductionSystem.I.TickDaily();
-        InventorySystem.I.TickDaily();
-        EconomySystem.I.TickDaily();
+        WeatherSystem.I?.TickDaily(DayOfYear);   // ← keep this
+        VineyardSystem.I?.TickDaily();
+        ProductionSystem.I?.TickDaily();
+        InventorySystem.I?.TickDaily();
+        EconomySystem.I?.TickDaily();
 
         Day++;
         OnNewDay?.Invoke();
     }
-
     public void SaveNow()
     {
         SaveLoadManager.Save(SaveData.FromSystems(Day));

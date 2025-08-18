@@ -124,15 +124,12 @@ public class VineyardDetailPanel : MonoBehaviour
                 var ws = WeatherSystem.I;
                 if (ws != null)
                 {
-                    object today = ws.Today;
-                    if (today != null)
-                    {
-                        soilMoist = GetAny(today, "humidity", -1f);
-                        if (soilMoist < 0f) soilMoist = GetAny(today, "relativeHumidity", -1f);
-                        if (soilMoist < 0f) soilMoist = GetAny(today, "humidityPct", -1f);
-                        if (soilMoist < 0f) soilMoist = GetAny(today, "rh", -1f);
-                        if (soilMoist > 0f && soilMoist <= 1f) soilMoist *= 100f; // normalize 0..1 -> %
-                    }
+                    DailyWeather today = WeatherSystem.I != null ? WeatherSystem.I.Today() : default;
+                    soilMoist = GetAny(today, "humidity", -1f);
+                    if (soilMoist < 0f) soilMoist = GetAny(today, "relativeHumidity", -1f);
+                    if (soilMoist < 0f) soilMoist = GetAny(today, "humidityPct", -1f);
+                    if (soilMoist < 0f) soilMoist = GetAny(today, "rh", -1f);
+                    if (soilMoist > 0f && soilMoist <= 1f) soilMoist *= 100f; // normalize 0..1 -> %
                 }
             }
             catch { soilMoist = -1f; }

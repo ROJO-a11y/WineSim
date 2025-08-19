@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Reflection;
 
 [Serializable]
 public struct DailyWeather
@@ -112,6 +113,40 @@ public class WeatherSystem : MonoBehaviour
         return default;
     }
 
+    // --- Monthly baseline helpers ---
+    private static float[] TryGet12(object cfgObj, params string[] names)
+    {
+        if (cfgObj == null) return null;
+        var t = cfgObj.GetType();
+        foreach (var n in names)
+        {
+            var f = t.GetField(n, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            if (f != null && f.FieldType == typeof(float[]))
+            {
+                var arr = (float[])f.GetValue(cfgObj);
+                if (arr != null && arr.Length == 12) return arr;
+            }
+            var p = t.GetProperty(n, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            if (p != null && p.PropertyType == typeof(float[]))
+            {
+                var arr = (float[])p.GetValue(cfgObj, null);
+                if (arr != null && arr.Length == 12) return arr;
+            }
+        }
+        return null;
+    }
+
+    private static float Blend12(float[] arr, int dayIndex, int dpy)
+    {
+        if (arr == null || arr.Length < 2) return 0f;
+        float monthPos = (dayIndex / Mathf.Max(1f, (float)dpy)) * 12f; // 0..12
+        int m0 = Mathf.FloorToInt(monthPos);
+        int m1 = (m0 + 1) % 12;
+        float t = monthPos - m0;
+        m0 = (m0 % 12 + 12) % 12;
+        return Mathf.Lerp(arr[m0], arr[m1], t);
+    }
+
     // ------- Generation -------
 
     private void EnsureYearGenerated(int yearIndex)
@@ -130,6 +165,16 @@ public class WeatherSystem : MonoBehaviour
         // Deterministic RNG per year
         var rng = new System.Random(seed ^ (yearIndex * 73856093));
         var cfgUsed = cfg; // cache
+
+        // Optional monthly baselines (Jan..Dec) if present on WeatherConfig
+        float[] tMin12   = TryGet12(cfgUsed, "tMinC12", "minTempC12", "tMin12");
+        float[] tMax12   = TryGet12(cfgUsed, "tMaxC12", "maxTempC12", "tMax12");
+        float[] sun12    = TryGet12(cfgUsed, "sunHours12", "sun12");
+        float[] rain12   = TryGet12(cfgUsed, "rainMmPerDay12", "rain12");
+        float[] et012    = TryGet12(cfgUsed, "et0MmPerDay12", "et012");
+        float[] hum12    = TryGet12(cfgUsed, "humidityPct12", "humPct12", "hum12");
+        float[] wind12   = TryGet12(cfgUsed, "windKph12", "wind12");
+        float[] mildew12 = TryGet12(cfgUsed, "mildewIndex12", "mildew12");
 
         // Defaults if no config assigned
         AnimationCurve tempYear, rainYear, humYear, solarYear, windYear;
@@ -178,18 +223,31 @@ public class WeatherSystem : MonoBehaviour
             mildewTempBand = new Vector2(18f, 26f);
         }
 
+        // Diagnostics counters
+        int wetCount = 0;
+        float rainSum = 0f;
+        float minTavg = float.PositiveInfinity;
+        float maxTavg = float.NegativeInfinity;
+
         for (int d = 0; d < dpy; d++)
         {
             float t = d / Mathf.Max(1f, (float)dpy); // 0..~1
 
             var w = new DailyWeather { dayIndex = d };
 
-            // Baselines
-            float baseT = EvalSafe(tempYear, t);   // °C (avg)
-            float baseRain = EvalSafe(rainYear, t);   // mm
-            float baseHum = EvalSafe(humYear, t);    // %
-            float baseSolar = EvalSafe(solarYear, t);  // MJ/m²
-            float baseWind = EvalSafe(windYear, t);   // kph
+            // Baselines (prefer monthly arrays if present)
+            float baseT = (tMin12 != null && tMax12 != null)
+                ? 0.5f * (Blend12(tMin12, d, dpy) + Blend12(tMax12, d, dpy))
+                : EvalSafe(tempYear, t);
+
+            float baseRain   = (rain12 != null) ? Blend12(rain12, d, dpy) : EvalSafe(rainYear, t);
+            float baseHum    = (hum12  != null) ? Blend12(hum12,  d, dpy) : EvalSafe(humYear, t);
+            float baseWind   = (wind12 != null) ? Blend12(wind12, d, dpy) : EvalSafe(windYear, t);
+
+            // If solar MJ/m2 monthly baselines exist, use them. Otherwise derive from sun hours if provided, else curve.
+            float baseSolar = EvalSafe(solarYear, t);
+            float baseSunHours = (sun12 != null) ? Mathf.Clamp(Blend12(sun12, d, dpy), 0f, 14.5f)
+                                                 : Mathf.Lerp(4f, 12f, Mathf.InverseLerp(6f, 20f, baseSolar));
 
             // Noise
             float dn = Mathf.PerlinNoise(t * 6f, 0.123f) - 0.5f;
@@ -201,23 +259,42 @@ public class WeatherSystem : MonoBehaviour
             w.tMinC = w.tAvgC - (6f + 2f * dn);
             w.tMaxC = w.tAvgC + (8f + 2f * dn);
 
-            // Rain: baseline + events
-            float rainToday = Mathf.Max(0f, baseRain + Mathf.Max(0f, (float)rng.NextDouble() - 0.7f) * 20f * dayNoise);
-            if (rng.NextDouble() < 0.06) rainToday += 10f * (float)rng.NextDouble(); // occasional convective burst
+            // Rain: convert baseline (mm/day) -> wet-day probability * intensity
+            // Choose a mean event intensity that grows in wetter months so E[rain] ≈ baseRain
+            float meanIntensity = Mathf.Lerp(3f, 8f, Mathf.Clamp01(baseRain / 4f)); // mm on wet days
+            float pWet = Mathf.Clamp01(baseRain / Mathf.Max(0.1f, meanIntensity));  // 0..1
+
+            bool wet = rng.NextDouble() < pWet;
+            float rainToday = 0f;
+            if (wet)
+            {
+                // Exponential distribution around meanIntensity for realistic skew
+                float u = Mathf.Max(1e-6f, (float)rng.NextDouble());
+                rainToday = Mathf.Max(0f, -meanIntensity * Mathf.Log(u));
+                // Occasional convective burst
+                if (rng.NextDouble() < 0.08 + 0.04f * dayNoise)
+                    rainToday += 10f * (float)rng.NextDouble();
+            }
             w.rainMm = rainToday;
 
             // Humidity / wind
-            w.humidityPct = Mathf.Clamp(baseHum + 10f * dn + 5f * rj, 25f, 100f);
+            // Wet days push humidity up a bit; dry days a bit down
+            float humBump = (w.rainMm > 0.1f) ? 6f : -2f;
+            w.humidityPct = Mathf.Clamp(baseHum + 10f * dn + 5f * rj + humBump, 25f, 100f);
             w.windKph = Mathf.Max(0f, baseWind + 6f * wn + 2f * rj);
             w.windDirDeg = (float)(rng.NextDouble() * 360.0);
 
             // Clouds / sun / solar
             w.cloudPct = Mathf.Clamp01(0.35f + 0.4f * (0.5f - dn) + 0.25f * (1f - Mathf.InverseLerp(0f, 24f, baseSolar)));
-            w.sunHours = Mathf.Clamp(12f * (1f - w.cloudPct) + 2f * dn, 0f, 14.5f);
+            w.sunHours = Mathf.Clamp(baseSunHours * Mathf.Lerp(0.6f, 1.1f, 1f - w.cloudPct) + 1.5f * dn, 0f, 14.5f);
+            // Reduce sun a bit further on rainy days
+            if (w.rainMm > 0.1f) w.sunHours = Mathf.Max(0f, w.sunHours - Mathf.Lerp(0.5f, 3f, Mathf.Clamp01(w.rainMm / 12f)));
             w.solarMJm2 = Mathf.Max(1f, baseSolar * Mathf.Lerp(0.6f, 1.1f, 1f - w.cloudPct));
 
-            // ET0 (very rough): proportional to solar & temperature
-            w.evapoTranspirationMm = Mathf.Max(0f, et0Coef * (w.solarMJm2 / 5.0f) * Mathf.Lerp(0.5f, 1.3f, Mathf.InverseLerp(5f, 30f, w.tAvgC)));
+            // ET0 (prefer monthly baseline if provided), then perturb
+            float et0Base = (et012 != null) ? Mathf.Max(0f, Blend12(et012, d, dpy))
+                                            : et0Coef * (w.solarMJm2 / 5.0f) * Mathf.Lerp(0.5f, 1.3f, Mathf.InverseLerp(5f, 30f, w.tAvgC));
+            w.evapoTranspirationMm = Mathf.Max(0f, et0Base * Mathf.Lerp(0.85f, 1.15f, Mathf.Clamp01(dn + rj * 0.25f)));
 
             // VPD (kPa) from T & RH: es ~ 0.6108*exp(17.27*T/(T+237.3)) ; VPD = es*(1-RH/100)
             float es = 0.6108f * Mathf.Exp(17.27f * w.tAvgC / (w.tAvgC + 237.3f));
@@ -237,16 +314,37 @@ public class WeatherSystem : MonoBehaviour
             if (isSummer && rng.NextDouble() < heatwaveProbSummer) w.heatwave = (w.tMaxC >= 34f);
             if (rng.NextDouble() < hailProb) { w.hail = true; w.storm = true; }
             else if (rng.NextDouble() < stormProb) w.storm = true;
+            // Storms often bring extra precipitation
+            if (w.storm) w.rainMm += 5f * (float)rng.NextDouble();
 
             // Mildew risk (simple): warm + humid + low VPD
             float humTerm = Mathf.InverseLerp(mildewHumThresh, 100f, w.humidityPct);
             float tempBand = Mathf.InverseLerp(mildewTempBand.x, mildewTempBand.y, w.tAvgC);
             float vpdTerm = 1f - Mathf.Clamp01(w.vpdKPa / 2.0f); // low VPD -> higher risk
-            w.mildewIndex = Mathf.Clamp01(0.4f * humTerm + 0.4f * tempBand + 0.2f * vpdTerm) * 100f;
+            float mildewDyn = Mathf.Clamp01(0.4f * humTerm + 0.4f * tempBand + 0.2f * vpdTerm);
+            if (mildew12 != null)
+            {
+                float baseMil = Mathf.Clamp01(Blend12(mildew12, d, dpy) / 100f);
+                w.mildewIndex = Mathf.Clamp01(0.5f * baseMil + 0.5f * mildewDyn) * 100f;
+            }
+            else
+            {
+                w.mildewIndex = mildewDyn * 100f;
+            }
+
+            // Diagnostics accumulation
+            minTavg = Mathf.Min(minTavg, w.tAvgC);
+            maxTavg = Mathf.Max(maxTavg, w.tAvgC);
+            if (w.rainMm > 0.1f) wetCount++;
+            rainSum += w.rainMm;
 
             days.Add(w);
             OnDayGenerated?.Invoke(d, w);
         }
+
+        float wetPct = (dpy > 0) ? (100f * wetCount / dpy) : 0f;
+        float meanRain = (dpy > 0) ? (rainSum / dpy) : 0f;
+        Debug.Log($"Weather year {yearIndex}: Tavg {minTavg:0.0}–{maxTavg:0.0} °C | wet days {wetPct:0.0}% | mean rain {meanRain:0.00} mm/day", this);
     }
 
     // ------- Utilities -------

@@ -1,5 +1,7 @@
 using UnityEngine;
 
+[DefaultExecutionOrder(-300)]
+
 public class GameConfigHolder : MonoBehaviour
 {
     public static GameConfigHolder Instance { get; private set; }

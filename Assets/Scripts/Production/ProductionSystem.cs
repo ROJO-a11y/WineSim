@@ -19,6 +19,32 @@ public class ProductionSystem : MonoBehaviour
     public IReadOnlyList<TankState> Tanks => tanks;
     public IReadOnlyList<BarrelState> Barrels => barrels;
 
+    // --- Config helpers ---
+    private GameConfig Conf() => GameConfigHolder.Instance ? GameConfigHolder.Instance.Config : cfg;
+    private int BottleSizeMl()
+    {
+        var c = Conf();
+        return c != null ? Mathf.Max(1, c.bottleSizeMl) : 750;
+    }
+    private float BarrelSweetBonus(int days)
+    {
+        var c = Conf();
+        int min = c != null ? c.barrelSweetSpotDaysMin : 120;
+        int max = c != null ? c.barrelSweetSpotDaysMax : 240;
+        if (max <= min) return 1f;
+        if (days < min)
+        {
+            float t = Mathf.Clamp01((min - days) / (float)(max - min));
+            return Mathf.Lerp(1f, 0.5f, t);
+        }
+        if (days > max)
+        {
+            float t = Mathf.Clamp01((days - max) / (float)(max - min));
+            return Mathf.Lerp(1f, 0.5f, t);
+        }
+        return 1f;
+    }
+
     void Awake() { I = this; }
 
     void OnEnable()
@@ -150,7 +176,13 @@ public class ProductionSystem : MonoBehaviour
         {
             if (b.aging == null) continue;
             b.aging.daysInBarrel++;
-            b.aging.craftQuality += cfg.barrelOakGainPerDay;
+            var c = Conf();
+            float oakPerDay = c != null ? c.barrelOakGainPerDay : cfg.barrelOakGainPerDay;
+            b.aging.craftQuality += oakPerDay * BarrelSweetBonus(b.aging.daysInBarrel);
+            if (c != null && (b.aging.daysInBarrel < c.barrelSweetSpotDaysMin || b.aging.daysInBarrel > c.barrelSweetSpotDaysMax))
+            {
+                b.aging.craftQuality -= c.overUnderPenaltyPerDay * 0.25f; // gentle drift down if outside window
+            }
         }
     }
 
@@ -224,10 +256,22 @@ public class ProductionSystem : MonoBehaviour
         // Compute quality with sweet spot window & penalties
         var variety = System.Array.Find(varieties, v => v.varietyName == b.aging.varietyName);
         int d = b.aging.daysInBarrel;
-        float curve = 0f;
-        if (d < variety.sweetSpotStart) curve = 1f - (variety.sweetSpotStart - d) * (cfg.overUnderPenaltyPerDay / 100f);
-        else if (d > variety.sweetSpotEnd) curve = 1f - (d - variety.sweetSpotEnd) * (cfg.overUnderPenaltyPerDay / 100f);
-        else curve = 1.1f; // little bonus for hitting the window
+        float curve;
+        var c = Conf();
+        if (c != null)
+        {
+            int min = c.barrelSweetSpotDaysMin;
+            int max = c.barrelSweetSpotDaysMax;
+            if (d < min)      curve = 1f - (min - d) * (c.overUnderPenaltyPerDay / 100f);
+            else if (d > max) curve = 1f - (d - max) * (c.overUnderPenaltyPerDay / 100f);
+            else              curve = 1.1f; // bonus in window
+        }
+        else
+        {
+            if (d < variety.sweetSpotStart)      curve = 1f - (variety.sweetSpotStart - d) * (cfg.overUnderPenaltyPerDay / 100f);
+            else if (d > variety.sweetSpotEnd)   curve = 1f - (d - variety.sweetSpotEnd) * (cfg.overUnderPenaltyPerDay / 100f);
+            else                                  curve = 1.1f;
+        }
 
         curve = Mathf.Clamp(curve, 0.6f, 1.2f);
 
@@ -235,7 +279,8 @@ public class ProductionSystem : MonoBehaviour
         quality *= curve;
         quality = Mathf.Clamp(quality, 0f, 100f);
 
-        int bottles = Mathf.RoundToInt(b.aging.liters / 0.75f);
+        int ml = BottleSizeMl();
+        int bottles = Mathf.FloorToInt((b.aging.liters * 1000f) / Mathf.Max(1, ml));
 
         bottled = new WineBatch
         {

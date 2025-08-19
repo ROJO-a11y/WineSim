@@ -26,6 +26,11 @@ public class GameConfig : ScriptableObject
     public int bottlingMachinePrice = 10000;
     public float grapeWholesalePerKg = 1.2f;
 
+    [Header("Production: Tank Capacities (L)")]
+    public int smallTankCapacityL = 1000;
+    public int medTankCapacityL   = 3000;
+    public int largeTankCapacityL = 6000;
+
     [Header("Market")]
     public float marketIndexMin = 0.8f;
     public float marketIndexMax = 1.2f;
@@ -39,6 +44,10 @@ public class GameConfig : ScriptableObject
     [Header("Calendar")]
     [Tooltip("Calendar start year used for vintages, e.g., 2025.")]
     public int startYear = 2025;   // <— NEW
+
+    [Header("Harvest Defaults (optional)")]
+    [Tooltip("Baseline liters per kg used when tile-specific value is not set.")]
+    public float defaultLitersPerKg = 0.70f;
 
     [Header("Vineyard Growth")]
     public float summerBrixPerDayMin = 0.10f;
@@ -58,7 +67,19 @@ public class GameConfig : ScriptableObject
     public float barrelOakGainPerDay = 0.15f;  // aroma/complexity (abstract)
     public float overUnderPenaltyPerDay = 0.2f;
 
+    [Header("Aging Sweet Spot (Barrel)")]
+    public int barrelSweetSpotDaysMin = 120;  // ~4 months (360-day year)
+    public int barrelSweetSpotDaysMax = 240;  // ~8 months
+
     [Header("Bottling")]
+    public int bottleSizeMl = 750;  // default 750 mL bottles
     public float bottleImprovementPerDay = 0.02f; // small drift for reds
     public float bottleWhiteDegradePerDay = 0.01f; // slower degrade
+
+    [Header("Bottle Development Sweet Spot (optional)")]
+    public int bottleSweetSpotDaysMin = 180;  // ~6 months
+    public int bottleSweetSpotDaysMax = 720;  // ~2 years
+
+    [Header("Goals / Win Conditions")]
+    public int annualRevenueTarget = 250_000; // tweak to taste
 }

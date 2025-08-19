@@ -25,6 +25,9 @@ public class BarrelItemUI : MonoBehaviour
         if (cfg != null)
         {
             cap = TryReadInt(cfg, new[] {
+                // Common in this project
+                "barrelVolumeL", "BarrelVolumeL",
+                // Older/alternate names
                 "barrelCapacityLiters","BarrelCapacityLiters",
                 "barrelCapacityL","BarrelCapacityL",
                 "barrelCapacity","BarrelCapacity",
@@ -58,6 +61,13 @@ public class BarrelItemUI : MonoBehaviour
         return -1;
     }
 
+    private int GetBottleSizeMl()
+    {
+        var holder = GameConfigHolder.Instance;
+        var cfg = holder != null ? holder.Config : null;
+        return cfg != null ? Mathf.Max(1, cfg.bottleSizeMl) : 750;
+    }
+
     public void Setup(BarrelState s, FacilityPanel panel)
     {
         this.panel = panel;
@@ -85,12 +95,18 @@ public class BarrelItemUI : MonoBehaviour
         }
 
         var a = s.aging;
-        title?.SetText($"Barrel ({cap} L) • {a.varietyName} {a.vintageYear} • {a.liters} L");
+        title?.SetText($"Barrel ({cap} L) • {a.varietyName} {a.vintageYear} • {a.liters:n0} L");
         info?.SetText(
             $"Days in barrel: {a.daysInBarrel}\n" +
             $"Craft: {a.craftQuality:0.0}"
         );
 
-        if (bottleBtn) bottleBtn.interactable = ProductionSystem.I.CanBottle(s);
+        if (bottleBtn)
+        {
+            int ml = GetBottleSizeMl();
+            int possible = Mathf.FloorToInt((a.liters * 1000f) / Mathf.Max(1, ml));
+            bool allowed = ProductionSystem.I && ProductionSystem.I.CanBottle(s) && possible > 0;
+            bottleBtn.interactable = allowed;
+        }
     }
 }

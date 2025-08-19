@@ -28,12 +28,17 @@ MonoBehaviour:
   barrelPrice: 900
   bottlingMachinePrice: 10000
   grapeWholesalePerKg: 1.2
+  smallTankCapacityL: 500
+  medTankCapacityL: 1000
+  largeTankCapacityL: 1500
   marketIndexMin: 0.8
   marketIndexMax: 1.2
   marketStepMax: 0.01
   secondsPerDay: 0.3
   daysPerYear: 360
   offlineCatchupCapDays: 30
+  startYear: 2025
+  defaultLitersPerKg: 0.7
   summerBrixPerDayMin: 0.1
   summerBrixPerDayMax: 0.4
   rainBrixPenalty: 0.15
@@ -46,5 +51,11 @@ MonoBehaviour:
   barrelVolumeL: 1000
   barrelOakGainPerDay: 0.15
   overUnderPenaltyPerDay: 0.2
+  barrelSweetSpotDaysMin: 120
+  barrelSweetSpotDaysMax: 240
+  bottleSizeMl: 750
   bottleImprovementPerDay: 0.02
   bottleWhiteDegradePerDay: 0.01
+  bottleSweetSpotDaysMin: 180
+  bottleSweetSpotDaysMax: 720
+  annualRevenueTarget: 250000

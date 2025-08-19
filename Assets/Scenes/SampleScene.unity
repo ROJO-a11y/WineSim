@@ -4435,7 +4435,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 645962c2aa787495f9b773c08cf72c3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cfg: {fileID: 11400000, guid: e6f84002d09c24a98b73d433cb1e2fc5, type: 2}
+  cfg: {fileID: 11400000, guid: f54ba40442a874640a33dcff7596d32b, type: 2}
+  seed: 12345
+  days: []
+  _generatedYearIndex: -2147483648
 --- !u!1 &534309019
 GameObject:
   m_ObjectHideFlags: 0

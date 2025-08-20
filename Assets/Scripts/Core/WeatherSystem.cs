@@ -60,6 +60,12 @@ public class WeatherSystem : MonoBehaviour
     [SerializeField, Tooltip("Cached year we generated for (0-based index from TimeController).")]
     private int _generatedYearIndex = int.MinValue;
 
+    [System.NonSerialized]
+    private Dictionary<int, List<DailyWeather>> _yearHistory = new Dictionary<int, List<DailyWeather>>();
+
+    [System.NonSerialized]
+    private int _lastGeneratedYear = 0;
+
     public event Action<int, DailyWeather> OnDayGenerated; // (dayIndex, weather)
 
     void Awake()
@@ -113,6 +119,19 @@ public class WeatherSystem : MonoBehaviour
         return default;
     }
 
+    /// <summary>
+    /// Returns archived weather for a given year index if available; falls back to the live list
+    /// when requesting the currently generated year. Returns null if no data exists.
+    /// </summary>
+    public IReadOnlyList<DailyWeather> GetYear(int yearIndex)
+    {
+        if (_yearHistory != null && _yearHistory.TryGetValue(yearIndex, out var list))
+            return list;
+        if (yearIndex == _lastGeneratedYear && days != null)
+            return days;
+        return null;
+    }
+
     // --- Monthly baseline helpers ---
     private static float[] TryGet12(object cfgObj, params string[] names)
     {
@@ -161,6 +180,7 @@ public class WeatherSystem : MonoBehaviour
     private void GenerateYear(int yearIndex, int dpy)
     {
         days.Clear();
+        _lastGeneratedYear = yearIndex;
 
         // Deterministic RNG per year
         var rng = new System.Random(seed ^ (yearIndex * 73856093));
@@ -345,6 +365,13 @@ public class WeatherSystem : MonoBehaviour
         float wetPct = (dpy > 0) ? (100f * wetCount / dpy) : 0f;
         float meanRain = (dpy > 0) ? (rainSum / dpy) : 0f;
         Debug.Log($"Weather year {yearIndex}: Tavg {minTavg:0.0}–{maxTavg:0.0} °C | wet days {wetPct:0.0}% | mean rain {meanRain:0.00} mm/day", this);
+
+        // Store this year for later comparisons (e.g., Stats overlay)
+        if (days != null)
+        {
+            if (_yearHistory == null) _yearHistory = new Dictionary<int, List<DailyWeather>>();
+            _yearHistory[yearIndex] = new List<DailyWeather>(days);
+        }
     }
 
     // ------- Utilities -------

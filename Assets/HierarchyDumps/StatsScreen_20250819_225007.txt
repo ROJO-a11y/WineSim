@@ -1,0 +1,532 @@
+﻿=== UI HIERARCHY DUMP: StatsScreen ===
+Scene: SampleScene
+Path:  UI/Canvas/Screens/StatsScreen
+
+• StatsScreen  [Image VLG LE ]
+   Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+   Image: raycastTarget=True color=RGBA(0.920, 0.880, 0.840, 1.000)
+   VLG: padding=(16,16,16,16) spacing=12 controlW/H=True/True expandW/H=True/False
+   LE: min=(-1,160) pref=(-1,-1) flex=(-1,-1)
+  • TopRow  [HLG LE ]
+     Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1048.00, 100.00) anchoredPos=(540.00, -66.00)
+     HLG: padding=(12,12,12,12) spacing=8 controlW/H=True/True expandW/H=True/False
+     LE: min=(-1,-1) pref=(-1,100) flex=(-1,-1)
+    • CashText  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(280.40, 26.62) anchoredPos=(152.20, -50.00)
+       TMP_Text: text="Cash: $214,760" overflow=Overflow wrap=True
+    • MarketText  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(244.57, 26.62) anchoredPos=(422.69, -50.00)
+       TMP_Text: text="Market: 1.07" overflow=Overflow wrap=True
+    • BrandText  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(221.01, 26.62) anchoredPos=(663.48, -50.00)
+       TMP_Text: text="Brand: 1.0" overflow=Overflow wrap=True
+    • DayText  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(254.02, 26.62) anchoredPos=(908.99, -50.00)
+       TMP_Text: text="Y1 • Day 338" overflow=Overflow wrap=True
+  • Revenue  [VLG ]
+     Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1048.00, 232.50) anchoredPos=(540.00, -244.25)
+     VLG: padding=(0,0,0,0) spacing=6 controlW/H=True/True expandW/H=True/False
+    • Title  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1048.00, 33.88) anchoredPos=(524.00, -16.94)
+       TMP_Text: text="Revenue (last year)" overflow=Overflow wrap=True
+    • AxisHint  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1048.00, 26.62) anchoredPos=(524.00, -53.19)
+       TMP_Text: text="months" overflow=Overflow wrap=True
+    • ChartArea  [Image HLG LE ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1048.00, 160.00) anchoredPos=(524.00, -152.50)
+       Image: raycastTarget=True color=RGBA(0.920, 0.880, 0.840, 1.000)
+       HLG: padding=(16,16,16,16) spacing=12 controlW/H=False/False expandW/H=True/False
+       LE: min=(-1,160) pref=(-1,-1) flex=(-1,-1)
+      • Bars  [HLG CSF ]
+         Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.00, 0.00) sizeDelta=(546.00, 0.00) anchoredPos=(16.00, -16.00)
+         HLG: padding=(0,0,0,0) spacing=6 controlW/H=True/False expandW/H=False/False
+         CSF: HFit=PreferredSize VFit=Unconstrained
+        • Bar_0  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 152.00) anchoredPos=(20.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.360, 0.750, 0.480, 1.000)
+           LE: min=(-1,-1) pref=(40,152) flex=(0,0)
+        • Bar_1  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(66.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.360, 0.750, 0.480, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_2  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(112.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.360, 0.750, 0.480, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_3  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(158.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.360, 0.750, 0.480, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_4  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(204.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.360, 0.750, 0.480, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_5  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(250.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.360, 0.750, 0.480, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_6  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(296.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.360, 0.750, 0.480, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_7  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(342.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.360, 0.750, 0.480, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_8  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(388.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.360, 0.750, 0.480, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_9  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(434.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.360, 0.750, 0.480, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_10  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(480.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.360, 0.750, 0.480, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_11  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(526.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.360, 0.750, 0.480, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+  • Bottles  [VLG ]
+     Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1274.00, 232.50) anchoredPos=(653.00, -488.75)
+     VLG: padding=(0,0,0,0) spacing=6 controlW/H=True/True expandW/H=True/False
+    • Title  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1274.00, 33.88) anchoredPos=(637.00, -16.94)
+       TMP_Text: text="Inventory bottles (last 180d)" overflow=Overflow wrap=True
+    • AxisHint  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1274.00, 26.62) anchoredPos=(637.00, -53.19)
+       TMP_Text: text="weeks" overflow=Overflow wrap=True
+    • ChartArea  [Image HLG LE ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1274.00, 160.00) anchoredPos=(637.00, -152.50)
+       Image: raycastTarget=True color=RGBA(0.920, 0.880, 0.840, 1.000)
+       HLG: padding=(16,16,16,16) spacing=12 controlW/H=False/False expandW/H=True/False
+       LE: min=(-1,160) pref=(-1,-1) flex=(-1,-1)
+      • Bars  [HLG CSF ]
+         Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.00, 0.00) sizeDelta=(1098.00, 0.00) anchoredPos=(16.00, -16.00)
+         HLG: padding=(0,0,0,0) spacing=6 controlW/H=True/False expandW/H=False/False
+         CSF: HFit=PreferredSize VFit=Unconstrained
+        • Bar_0  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(20.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_1  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(66.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_2  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(112.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_3  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(158.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_4  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(204.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_5  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(250.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_6  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(296.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_7  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(342.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_8  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(388.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_9  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(434.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_10  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(480.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_11  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(526.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_12  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(572.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_13  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(618.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_14  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(664.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_15  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(710.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_16  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(756.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_17  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(802.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_18  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(848.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_19  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(894.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_20  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(940.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_21  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(986.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_22  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(1032.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+        • Bar_23  [Image LE ]
+           Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(40.00, 0.00) anchoredPos=(1078.00, 0.00)
+           Image: raycastTarget=True color=RGBA(0.320, 0.620, 0.860, 1.000)
+           LE: min=(-1,-1) pref=(40,0) flex=(0,0)
+  • Weather  [VLG ]
+     Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1048.00, 119.05) anchoredPos=(540.00, -676.53)
+     VLG: padding=(12,12,12,12) spacing=8 controlW/H=True/True expandW/H=True/False
+    • Temp  [VLG ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1024.00, 26.35) anchoredPos=(524.00, -25.18)
+       VLG: padding=(0,0,0,0) spacing=4 controlW/H=True/True expandW/H=True/False
+      • Title  [Text ]
+         Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1024.00, 22.35) anchoredPos=(512.00, -11.18)
+         TMP_Text: text="Temp (avg °C, this year)" overflow=Overflow wrap=False
+      • ChartArea  []
+         Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(1024.00, 0.00) anchoredPos=(512.00, -26.35)
+        • Bars  [HLG CSF ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 1.00) pivot=(0.00, 0.00) sizeDelta=(1012.00, 0.00) anchoredPos=(6.00, 0.00)
+           HLG: padding=(0,0,0,0) spacing=6 controlW/H=True/False expandW/H=False/False
+           CSF: HFit=PreferredSize VFit=Unconstrained
+          • WBar_0  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(18.21, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_1  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(60.63, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_2  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(103.04, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_3  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(145.46, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_4  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(187.88, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_5  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(230.29, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_6  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(272.71, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_7  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(315.13, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_8  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(357.54, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_9  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(399.96, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_10  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(442.38, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_11  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(484.79, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_12  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(527.21, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_13  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(569.62, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_14  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(612.04, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_15  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(654.46, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_16  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(696.88, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_17  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(739.29, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_18  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(781.71, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_19  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(824.13, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_20  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(866.54, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_21  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(908.96, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_22  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(951.38, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_23  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(993.79, 0.00)
+             Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+    • Rain  [VLG ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1024.00, 26.35) anchoredPos=(524.00, -59.53)
+       VLG: padding=(0,0,0,0) spacing=4 controlW/H=True/True expandW/H=True/False
+      • Title  [Text ]
+         Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1024.00, 22.35) anchoredPos=(512.00, -11.18)
+         TMP_Text: text="Rain (mm, this year)" overflow=Overflow wrap=False
+      • ChartArea  []
+         Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(1024.00, 0.00) anchoredPos=(512.00, -26.35)
+        • Bars  [HLG CSF ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 1.00) pivot=(0.00, 0.00) sizeDelta=(1012.00, 0.00) anchoredPos=(6.00, 0.00)
+           HLG: padding=(0,0,0,0) spacing=6 controlW/H=True/False expandW/H=False/False
+           CSF: HFit=PreferredSize VFit=Unconstrained
+          • WBar_0  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(18.21, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_1  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(60.63, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_2  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(103.04, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_3  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(145.46, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_4  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(187.88, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_5  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(230.29, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_6  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(272.71, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_7  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(315.13, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_8  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(357.54, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_9  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(399.96, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_10  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(442.38, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_11  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(484.79, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_12  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(527.21, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_13  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(569.62, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_14  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(612.04, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_15  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(654.46, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_16  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(696.88, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_17  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(739.29, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_18  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(781.71, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_19  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(824.13, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_20  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(866.54, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_21  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(908.96, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_22  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(951.38, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_23  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(993.79, 0.00)
+             Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+    • Sun  [VLG ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1024.00, 26.35) anchoredPos=(524.00, -93.88)
+       VLG: padding=(0,0,0,0) spacing=4 controlW/H=True/True expandW/H=True/False
+      • Title  [Text ]
+         Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1024.00, 22.35) anchoredPos=(512.00, -11.18)
+         TMP_Text: text="Sun (hours, this year)" overflow=Overflow wrap=False
+      • ChartArea  []
+         Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(1024.00, 0.00) anchoredPos=(512.00, -26.35)
+        • Bars  [HLG CSF ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 1.00) pivot=(0.00, 0.00) sizeDelta=(1012.00, 0.00) anchoredPos=(6.00, 0.00)
+           HLG: padding=(0,0,0,0) spacing=6 controlW/H=True/False expandW/H=False/False
+           CSF: HFit=PreferredSize VFit=Unconstrained
+          • WBar_0  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(18.21, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_1  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(60.63, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_2  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(103.04, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_3  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(145.46, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_4  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(187.88, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_5  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(230.29, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_6  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(272.71, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_7  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(315.13, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_8  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(357.54, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_9  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(399.96, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_10  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(442.38, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_11  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(484.79, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_12  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(527.21, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_13  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(569.62, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_14  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(612.04, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_15  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(654.46, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_16  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(696.88, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_17  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(739.29, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_18  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(781.71, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_19  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(824.13, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_20  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(866.54, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_21  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(908.96, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_22  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(951.38, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)
+          • WBar_23  [Image LE ]
+             Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(36.42, 0.00) anchoredPos=(993.79, 0.00)
+             Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+             LE: min=(-1,-1) pref=(36.41667,0) flex=(0,0)

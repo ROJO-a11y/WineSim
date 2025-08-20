@@ -954,10 +954,40 @@ MonoBehaviour:
   bottlesTitle: {fileID: 771361742}
   bottlesAxisHint: {fileID: 1631279821}
   bottlesBarColor: {r: 0.32, g: 0.62, b: 0.86, a: 1}
+  weatherTempArea: {fileID: 0}
+  weatherTempTitle: {fileID: 0}
+  weatherRainArea: {fileID: 0}
+  weatherRainTitle: {fileID: 0}
+  weatherSunArea: {fileID: 0}
+  weatherSunTitle: {fileID: 0}
+  tempBarColor: {r: 0.95, g: 0.45, b: 0.35, a: 1}
+  rainBarColor: {r: 0.3, g: 0.55, b: 0.9, a: 1}
+  sunBarColor: {r: 0.97, g: 0.82, b: 0.35, a: 1}
+  compareLastYear: 1
+  tempPrevColor: {r: 0.95, g: 0.45, b: 0.35, a: 0.35}
+  rainPrevColor: {r: 0.3, g: 0.55, b: 0.9, a: 0.35}
+  sunPrevColor: {r: 0.97, g: 0.82, b: 0.35, a: 0.35}
+  monthAxisHeight: 18
+  monthLabelFontSize: 14
+  monthLabelColor: {r: 0, g: 0, b: 0, a: 0.55}
+  overlayLineThickness: 3
+  monthPadding: 2
+  monthlyBarsUseFixedWidth: 1
+  monthlyBarWidth: 10
+  monthlyBarMaxRatio: 0.5
+  monthlyWidthRatio: 0.8
+  monthlyOuterPad: 8
+  monthlyUseFixedSlotWidth: 1
+  monthlySlotWidth: 22
+  monthlySlotGap: 6
+  monthlyAlignLeft: 1
+  monthlyScaleToFit: 1
+  monthlyMaxScale: 1.6
   barSpacing: 6
   minBarWidth: 8
   maxBarWidth: 40
   chartTopPadding: 8
+  debugLayout: 0
 --- !u!114 &171358968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3077,7 +3107,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 0.1, g: 0.12, b: 0.16, a: 1}
+  m_fontColor: {r: 0.12, g: 0.1, b: 0.08, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5584,8 +5614,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279507487
-  m_fontColor: {r: 0.12, g: 0.1, b: 0.08, a: 1}
+    rgba: 4280885018
+  m_fontColor: {r: 0.1, g: 0.12, b: 0.16, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6393,7 +6423,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontColor: {r: 0.1, g: 0.12, b: 0.16, a: 1}
+  m_fontColor: {r: 0.12, g: 0.1, b: 0.08, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -12330,8 +12360,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279507487
-  m_fontColor: {r: 0.12, g: 0.1, b: 0.08, a: 1}
+    rgba: 4280885018
+  m_fontColor: {r: 0.1, g: 0.12, b: 0.16, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -14704,8 +14734,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279507487
-  m_fontColor: {r: 0.12, g: 0.1, b: 0.08, a: 1}
+    rgba: 4280885018
+  m_fontColor: {r: 0.1, g: 0.12, b: 0.16, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -15322,7 +15352,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontColor: {r: 0.12, g: 0.1, b: 0.08, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

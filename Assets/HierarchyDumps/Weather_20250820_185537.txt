@@ -1,0 +1,340 @@
+﻿=== UI HIERARCHY DUMP: Weather ===
+Scene: SampleScene
+Path:  UI/Canvas/Screens/StatsScreen/Weather
+
+• Weather  [VLG ]
+   Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1048.00, 539.05) anchoredPos=(540.00, -886.53)
+   VLG: padding=(12,12,12,12) spacing=8 controlW/H=True/True expandW/H=True/False
+  • Temp  [VLG ]
+     Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1024.00, 166.35) anchoredPos=(524.00, -95.18)
+     VLG: padding=(0,0,0,0) spacing=4 controlW/H=True/True expandW/H=True/False
+    • Title  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1024.00, 22.35) anchoredPos=(512.00, -11.18)
+       TMP_Text: text="Temp (avg °C)" overflow=Overflow wrap=False
+    • ChartArea  [LE Mask ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(1024.00, 140.00) anchoredPos=(512.00, -166.35)
+       LE: min=(0,140) pref=(-1,140) flex=(1,0)
+       RectMask2D: (enabled)
+      • Grid  []
+         Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.00, 0.00) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+        • G_0  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(25.60, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_1  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(70.40, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_2  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(115.20, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_3  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(160.00, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_4  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(204.80, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_5  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(249.60, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_6  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(294.40, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_7  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(339.20, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_8  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(384.00, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_9  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(428.80, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_10  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(473.60, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_11  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(518.40, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+      • BarsFixed  []
+         Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.00, 0.00) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+        • Bar_0  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(10.00, 120.76) anchoredPos=(25.60, 18.00)
+           Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+        • Bar_1  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(10.00, 170.78) anchoredPos=(70.40, 18.00)
+           Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+        • Bar_2  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(10.00, 221.91) anchoredPos=(115.20, 18.00)
+           Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+        • Bar_3  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(10.00, 254.40) anchoredPos=(160.00, 18.00)
+           Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+        • Bar_4  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(10.00, 269.05) anchoredPos=(204.80, 18.00)
+           Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+        • Bar_5  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(10.00, 280.35) anchoredPos=(249.60, 18.00)
+           Image: raycastTarget=True color=RGBA(0.950, 0.450, 0.350, 1.000)
+      • OverlayLine  []
+         Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.00, 0.00) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+      • Axis  []
+         Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.00, 0.00) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+        • Baseline  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.00, 0.00) sizeDelta=(528.00, 2.00) anchoredPos=(8.00, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.250)
+        • M_0  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(25.60, 2.00)
+           TMP_Text: text="J" overflow=Overflow wrap=False
+        • M_1  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(70.40, 2.00)
+           TMP_Text: text="F" overflow=Overflow wrap=False
+        • M_2  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(115.20, 2.00)
+           TMP_Text: text="M" overflow=Overflow wrap=False
+        • M_3  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(160.00, 2.00)
+           TMP_Text: text="A" overflow=Overflow wrap=False
+        • M_4  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(204.80, 2.00)
+           TMP_Text: text="M" overflow=Overflow wrap=False
+        • M_5  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(249.60, 2.00)
+           TMP_Text: text="J" overflow=Overflow wrap=False
+        • M_6  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(294.40, 2.00)
+           TMP_Text: text="J" overflow=Overflow wrap=False
+        • M_7  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(339.20, 2.00)
+           TMP_Text: text="A" overflow=Overflow wrap=False
+        • M_8  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(384.00, 2.00)
+           TMP_Text: text="S" overflow=Overflow wrap=False
+        • M_9  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(428.80, 2.00)
+           TMP_Text: text="O" overflow=Overflow wrap=False
+        • M_10  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(473.60, 2.00)
+           TMP_Text: text="N" overflow=Overflow wrap=False
+        • M_11  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(518.40, 2.00)
+           TMP_Text: text="D" overflow=Overflow wrap=False
+  • Rain  [VLG ]
+     Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1024.00, 166.35) anchoredPos=(524.00, -269.53)
+     VLG: padding=(0,0,0,0) spacing=4 controlW/H=True/True expandW/H=True/False
+    • Title  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1024.00, 22.35) anchoredPos=(512.00, -11.18)
+       TMP_Text: text="Rain (avg mm/day)" overflow=Overflow wrap=False
+    • ChartArea  [LE Mask ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(1024.00, 140.00) anchoredPos=(512.00, -166.35)
+       LE: min=(0,140) pref=(-1,140) flex=(1,0)
+       RectMask2D: (enabled)
+      • Grid  []
+         Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.00, 0.00) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+        • G_0  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(25.60, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_1  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(70.40, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_2  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(115.20, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_3  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(160.00, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_4  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(204.80, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_5  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(249.60, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_6  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(294.40, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_7  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(339.20, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_8  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(384.00, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_9  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(428.80, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_10  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(473.60, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_11  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(518.40, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+      • BarsFixed  []
+         Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.00, 0.00) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+        • Bar_0  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(10.00, 280.35) anchoredPos=(25.60, 18.00)
+           Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+        • Bar_1  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(10.00, 253.80) anchoredPos=(70.40, 18.00)
+           Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+        • Bar_2  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(10.00, 265.78) anchoredPos=(115.20, 18.00)
+           Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+        • Bar_3  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(10.00, 104.08) anchoredPos=(160.00, 18.00)
+           Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+        • Bar_4  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(10.00, 150.53) anchoredPos=(204.80, 18.00)
+           Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+        • Bar_5  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(10.00, 119.67) anchoredPos=(249.60, 18.00)
+           Image: raycastTarget=True color=RGBA(0.300, 0.550, 0.900, 1.000)
+      • OverlayLine  []
+         Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.00, 0.00) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+      • Axis  []
+         Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.00, 0.00) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+        • Baseline  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.00, 0.00) sizeDelta=(528.00, 2.00) anchoredPos=(8.00, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.250)
+        • M_0  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(25.60, 2.00)
+           TMP_Text: text="J" overflow=Overflow wrap=False
+        • M_1  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(70.40, 2.00)
+           TMP_Text: text="F" overflow=Overflow wrap=False
+        • M_2  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(115.20, 2.00)
+           TMP_Text: text="M" overflow=Overflow wrap=False
+        • M_3  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(160.00, 2.00)
+           TMP_Text: text="A" overflow=Overflow wrap=False
+        • M_4  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(204.80, 2.00)
+           TMP_Text: text="M" overflow=Overflow wrap=False
+        • M_5  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(249.60, 2.00)
+           TMP_Text: text="J" overflow=Overflow wrap=False
+        • M_6  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(294.40, 2.00)
+           TMP_Text: text="J" overflow=Overflow wrap=False
+        • M_7  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(339.20, 2.00)
+           TMP_Text: text="A" overflow=Overflow wrap=False
+        • M_8  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(384.00, 2.00)
+           TMP_Text: text="S" overflow=Overflow wrap=False
+        • M_9  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(428.80, 2.00)
+           TMP_Text: text="O" overflow=Overflow wrap=False
+        • M_10  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(473.60, 2.00)
+           TMP_Text: text="N" overflow=Overflow wrap=False
+        • M_11  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(518.40, 2.00)
+           TMP_Text: text="D" overflow=Overflow wrap=False
+  • Sun  [VLG ]
+     Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1024.00, 166.35) anchoredPos=(524.00, -443.88)
+     VLG: padding=(0,0,0,0) spacing=4 controlW/H=True/True expandW/H=True/False
+    • Title  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1024.00, 22.35) anchoredPos=(512.00, -11.18)
+       TMP_Text: text="Sun (avg h/day)" overflow=Overflow wrap=False
+    • ChartArea  [LE Mask ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.00) sizeDelta=(1024.00, 140.00) anchoredPos=(512.00, -166.35)
+       LE: min=(0,140) pref=(-1,140) flex=(1,0)
+       RectMask2D: (enabled)
+      • Grid  []
+         Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.00, 0.00) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+        • G_0  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(25.60, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_1  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(70.40, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_2  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(115.20, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_3  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(160.00, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_4  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(204.80, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_5  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(249.60, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_6  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(294.40, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_7  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(339.20, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_8  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(384.00, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_9  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(428.80, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_10  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(473.60, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+        • G_11  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(1.50, 280.35) anchoredPos=(518.40, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.200)
+      • BarsFixed  []
+         Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.00, 0.00) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+        • Bar_0  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(10.00, 93.77) anchoredPos=(25.60, 18.00)
+           Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+        • Bar_1  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(10.00, 115.32) anchoredPos=(70.40, 18.00)
+           Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+        • Bar_2  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(10.00, 172.44) anchoredPos=(115.20, 18.00)
+           Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+        • Bar_3  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(10.00, 213.36) anchoredPos=(160.00, 18.00)
+           Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+        • Bar_4  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(10.00, 224.92) anchoredPos=(204.80, 18.00)
+           Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+        • Bar_5  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(10.00, 280.35) anchoredPos=(249.60, 18.00)
+           Image: raycastTarget=True color=RGBA(0.970, 0.820, 0.350, 1.000)
+      • OverlayLine  []
+         Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.00, 0.00) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+      • Axis  []
+         Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.00, 0.00) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+        • Baseline  [Image ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.00, 0.00) sizeDelta=(528.00, 2.00) anchoredPos=(8.00, 18.00)
+           Image: raycastTarget=True color=RGBA(0.000, 0.000, 0.000, 0.250)
+        • M_0  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(25.60, 2.00)
+           TMP_Text: text="J" overflow=Overflow wrap=False
+        • M_1  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(70.40, 2.00)
+           TMP_Text: text="F" overflow=Overflow wrap=False
+        • M_2  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(115.20, 2.00)
+           TMP_Text: text="M" overflow=Overflow wrap=False
+        • M_3  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(160.00, 2.00)
+           TMP_Text: text="A" overflow=Overflow wrap=False
+        • M_4  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(204.80, 2.00)
+           TMP_Text: text="M" overflow=Overflow wrap=False
+        • M_5  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(249.60, 2.00)
+           TMP_Text: text="J" overflow=Overflow wrap=False
+        • M_6  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(294.40, 2.00)
+           TMP_Text: text="J" overflow=Overflow wrap=False
+        • M_7  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(339.20, 2.00)
+           TMP_Text: text="A" overflow=Overflow wrap=False
+        • M_8  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(384.00, 2.00)
+           TMP_Text: text="S" overflow=Overflow wrap=False
+        • M_9  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(428.80, 2.00)
+           TMP_Text: text="O" overflow=Overflow wrap=False
+        • M_10  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(473.60, 2.00)
+           TMP_Text: text="N" overflow=Overflow wrap=False
+        • M_11  [Text ]
+           Rect: anchorMin=(0.00, 0.00) anchorMax=(0.00, 0.00) pivot=(0.50, 0.00) sizeDelta=(200.00, 50.00) anchoredPos=(518.40, 2.00)
+           TMP_Text: text="D" overflow=Overflow wrap=False

@@ -66,6 +66,8 @@ public class StatsPanel : MonoBehaviour
     [SerializeField] bool  monthlyUseFixedSlotWidth = true;   // Use a fixed slot + gap width so the whole 12-month grid is compact
     [SerializeField] float monthlySlotWidth = 22f;            // Visual width allocated to each month slot (px)
     [SerializeField] float monthlySlotGap   = 6f;             // Gap between month slots (px)
+    [SerializeField] bool monthlyFillFullWidth = true;       // force the 12-month grid to span the whole chart width
+    [SerializeField] float monthlyEdgePad = 0f;              // small left/right pad when filling full width
     [SerializeField] bool monthlyAlignLeft = true;            // align the 12-month grid to the left instead of centering
     [SerializeField] bool monthlyScaleToFit = true;           // allow the fixed-slot grid to expand to fill available width
     [SerializeField, Range(0.25f, 10f)] float monthlyMaxScale = 4f; // allow more expansion so grid can fill width
@@ -494,6 +496,20 @@ public class StatsPanel : MonoBehaviour
             slotW = Mathf.Max(1f, usableW / months);
             xCenterProvider = (i) => left + slotW * (i + 0.5f);
             usedWOverride = Mathf.Min(usableW, totalW - left - right);
+        }
+
+        // --- Optional full-width override ---
+        // If enabled, ignore the fixed/flexible slot calculations above and stretch the 12-month grid
+        // to the full width of the chart area (minus a small configurable edge pad).
+        if (monthlyFillFullWidth)
+        {
+            left  = Mathf.Max(0f, monthlyEdgePad);
+            right = Mathf.Max(0f, monthlyEdgePad);
+            usableW = Mathf.Max(1f, totalW - left - right);
+            slotW   = Mathf.Max(1f, usableW / months);
+            usedWOverride = usableW;                  // tell downstream width/axis to use full inner width
+            xCenterProvider = (i) => left + slotW * (i + 0.5f);
+            visualSlotWidthOverride = slotW;          // make per-month visual slot match the full-width slots
         }
 
         float innerRight = left + (usedWOverride > 0f ? usedWOverride : Mathf.Min(usableW, totalW - left - right));

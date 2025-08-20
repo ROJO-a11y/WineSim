@@ -967,19 +967,23 @@ MonoBehaviour:
   tempPrevColor: {r: 0.95, g: 0.45, b: 0.35, a: 0.35}
   rainPrevColor: {r: 0.3, g: 0.55, b: 0.9, a: 0.35}
   sunPrevColor: {r: 0.97, g: 0.82, b: 0.35, a: 0.35}
+  weatherChartMinHeight: 140
+  weatherChartPreferredHeight: 160
   monthAxisHeight: 18
   monthLabelFontSize: 14
   monthLabelColor: {r: 0, g: 0, b: 0, a: 0.55}
   overlayLineThickness: 3
   monthPadding: 2
   monthlyBarsUseFixedWidth: 1
-  monthlyBarWidth: 10
+  monthlyBarWidth: 30
   monthlyBarMaxRatio: 0.5
   monthlyWidthRatio: 0.8
   monthlyOuterPad: 8
   monthlyUseFixedSlotWidth: 1
   monthlySlotWidth: 22
   monthlySlotGap: 6
+  monthlyFillFullWidth: 1
+  monthlyEdgePad: 0
   monthlyAlignLeft: 1
   monthlyScaleToFit: 1
   monthlyMaxScale: 1.6
@@ -3107,7 +3111,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 0.12, g: 0.1, b: 0.08, a: 1}
+  m_fontColor: {r: 0.1, g: 0.12, b: 0.16, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5614,8 +5618,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280885018
-  m_fontColor: {r: 0.1, g: 0.12, b: 0.16, a: 1}
+    rgba: 4279507487
+  m_fontColor: {r: 0.12, g: 0.1, b: 0.08, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6423,7 +6427,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontColor: {r: 0.12, g: 0.1, b: 0.08, a: 1}
+  m_fontColor: {r: 0.1, g: 0.12, b: 0.16, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -12360,8 +12364,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280885018
-  m_fontColor: {r: 0.1, g: 0.12, b: 0.16, a: 1}
+    rgba: 4279507487
+  m_fontColor: {r: 0.12, g: 0.1, b: 0.08, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -14734,8 +14738,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280885018
-  m_fontColor: {r: 0.1, g: 0.12, b: 0.16, a: 1}
+    rgba: 4279507487
+  m_fontColor: {r: 0.12, g: 0.1, b: 0.08, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -15352,7 +15356,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0.12, g: 0.1, b: 0.08, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

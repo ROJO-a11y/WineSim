@@ -77,6 +77,7 @@ public class StatsPanel : MonoBehaviour
     [SerializeField] float minBarWidth = 8f;
     [SerializeField] float maxBarWidth = 40f;
     [SerializeField] float chartTopPadding = 8f;
+    [SerializeField] float chartSidePadding = 8f; // left/right inner pad for generic bar charts
 
     void Reset()      { AutoCache(); }
     void OnValidate() { if (!Application.isPlaying) AutoCache(); }
@@ -119,6 +120,9 @@ public class StatsPanel : MonoBehaviour
             else dayText.text = "Day: ?";
         }
 
+        // Make sure these sections and their parents stretch to the full width
+        FixSectionAnchors(revenueChartArea);
+        FixSectionAnchors(bottlesChartArea);
         // --- Revenue (last year) ---
         int dpy = GameConfigHolder.Instance ? GameConfigHolder.Instance.Config.daysPerYear : 360;
         var revDays = StatsTracker.I ? StatsTracker.I.GetRevenueLastDays(dpy) : System.Array.Empty<int>();
@@ -228,9 +232,16 @@ public class StatsPanel : MonoBehaviour
     private void BuildBars(RectTransform area, int[] values, Color color)
     {
         if (!area) return;
-        SanitizeArea(area, weatherChartMinHeight);
 
-        // Bars container (stretch to area; no ContentSizeFitter here)
+        // Ensure area is ready and stretches horizontally (also clips)
+        SanitizeArea(area, weatherChartMinHeight);
+        FixSectionAnchors(area);
+
+        // Make sure layout sizes are up to date before we read rects
+        Canvas.ForceUpdateCanvases();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(area);
+
+        // Bars container (stretch to area; no ContentSizeFitter)
         var bars = area.Find("Bars") as RectTransform;
         if (!bars)
         {
@@ -239,36 +250,52 @@ public class StatsPanel : MonoBehaviour
             bars.SetParent(area, false);
         }
 
+        // Clear previous bars
         for (int i = bars.childCount - 1; i >= 0; i--) Destroy(bars.GetChild(i).gameObject);
 
         // Stretch the Bars container to the ChartArea
         bars.anchorMin = new Vector2(0, 0);
         bars.anchorMax = new Vector2(1, 1);
         bars.pivot     = new Vector2(0, 0);
-        bars.offsetMin = new Vector2(barSpacing, 0);
-        bars.offsetMax = new Vector2(-barSpacing, 0);
+        // keep a small inner side padding, vertical padding 0 (we already budget top in chartTopPadding)
+        bars.offsetMin = new Vector2(chartSidePadding, 0);
+        bars.offsetMax = new Vector2(-chartSidePadding, 0);
 
+        // Layout group to line up bars across full width
         var hlg = bars.GetComponent<HorizontalLayoutGroup>() ?? bars.gameObject.AddComponent<HorizontalLayoutGroup>();
         hlg.spacing = barSpacing;
         hlg.childControlWidth = true;
         hlg.childControlHeight = false;
-        hlg.childForceExpandWidth = false;
+        hlg.childForceExpandWidth = false;   // we compute widths explicitly
         hlg.childForceExpandHeight = false;
         hlg.childAlignment = TextAnchor.LowerLeft;
 
-        if (values == null || values.Length == 0) { LayoutRebuilder.ForceRebuildLayoutImmediate(area); return; }
+        if (values == null || values.Length == 0)
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(area);
+            return;
+        }
 
+        // Compute bar sizes using the *current* rect
+        var rect = area.rect;
+        // Height available for bars (reserve chartTopPadding at the top)
+        float chartH = Mathf.Max(0f, rect.height - chartTopPadding);
+
+        // Max value for normalization
         float max = 0f;
         for (int i = 0; i < values.Length; i++) if (values[i] > max) max = values[i];
         if (max <= 0f) max = 1f;
 
-        var rect = area.rect;
-        float availableW = Mathf.Max(0f, rect.width - (values.Length + 1) * barSpacing);
-        float w = values.Length > 0 ? availableW / values.Length : 0f;
+        // Width: use full inner width of Bars (side padding already applied via offsets)
+        // total inner width (ignoring children) is bars.rect.width AFTER a rebuild; approximate from area now
+        float innerW = Mathf.Max(0f, rect.width - (chartSidePadding * 2f));
+        // total spacing between bars is (n-1) * barSpacing
+        float totalSpacing = Mathf.Max(0f, (values.Length - 1) * barSpacing);
+        // remaining width is distributed evenly across bars
+        float w = values.Length > 0 ? (innerW - totalSpacing) / values.Length : 0f;
         w = Mathf.Clamp(w, minBarWidth, maxBarWidth);
 
-        float chartH = Mathf.Max(0f, rect.height - chartTopPadding);
-
+        // Instantiate bars
         for (int i = 0; i < values.Length; i++)
         {
             float h = chartH * (values[i] / max);
@@ -292,8 +319,10 @@ public class StatsPanel : MonoBehaviour
             img.color = color;
         }
 
+        // Final layout pass
         LayoutRebuilder.ForceRebuildLayoutImmediate(bars);
         LayoutRebuilder.ForceRebuildLayoutImmediate(area);
+        Canvas.ForceUpdateCanvases();
     }
 
     private void BuildWeatherCharts()

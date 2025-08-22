@@ -1,0 +1,53 @@
+﻿=== UI HIERARCHY DUMP: StatsScreen ===
+Scene: SampleScene
+Path:  UI/Canvas/Screens/StatsScreen
+
+• StatsScreen  [Image VLG LE ]
+   Rect: anchorMin=(0.00, 0.00) anchorMax=(1.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(0.00, 0.00) anchoredPos=(0.00, 0.00)
+   Image: raycastTarget=True color=RGBA(0.920, 0.880, 0.840, 1.000)
+   VLG: padding=(16,16,16,16) spacing=12 controlW/H=True/True expandW/H=True/False
+   LE: min=(-1,160) pref=(-1,-1) flex=(-1,-1)
+  • TopRow  [HLG LE ]
+     Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1048.00, 100.00) anchoredPos=(540.00, -66.00)
+     HLG: padding=(12,12,12,12) spacing=8 controlW/H=True/True expandW/H=True/False
+     LE: min=(-1,-1) pref=(-1,100) flex=(-1,-1)
+    • CashText  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(245.31, 26.62) anchoredPos=(134.65, -50.00)
+       TMP_Text: text="Cash: $0" overflow=Overflow wrap=True
+    • MarketText  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(251.57, 26.62) anchoredPos=(391.09, -50.00)
+       TMP_Text: text="New Text" overflow=Overflow wrap=True
+    • BrandText  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(251.57, 26.62) anchoredPos=(650.65, -50.00)
+       TMP_Text: text="New Text" overflow=Overflow wrap=True
+    • DayText  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(251.57, 26.62) anchoredPos=(910.22, -50.00)
+       TMP_Text: text="New Text" overflow=Overflow wrap=True
+  • Revenue  [VLG ]
+     Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1048.00, 232.50) anchoredPos=(540.00, -244.25)
+     VLG: padding=(0,0,0,0) spacing=6 controlW/H=True/True expandW/H=True/False
+    • Title  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1048.00, 33.88) anchoredPos=(524.00, -16.94)
+       TMP_Text: text="Revenue (last year)" overflow=Overflow wrap=True
+    • AxisHint  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1048.00, 26.62) anchoredPos=(524.00, -53.19)
+       TMP_Text: text="months" overflow=Overflow wrap=True
+    • ChartArea  [Image HLG LE ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1048.00, 160.00) anchoredPos=(524.00, -152.50)
+       Image: raycastTarget=True color=RGBA(0.920, 0.880, 0.840, 1.000)
+       HLG: padding=(16,16,16,16) spacing=12 controlW/H=False/False expandW/H=True/False
+       LE: min=(-1,160) pref=(-1,-1) flex=(-1,-1)
+  • Bottles  [VLG ]
+     Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1048.00, 232.50) anchoredPos=(540.00, -488.75)
+     VLG: padding=(0,0,0,0) spacing=6 controlW/H=True/True expandW/H=True/False
+    • Title  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1048.00, 33.88) anchoredPos=(524.00, -16.94)
+       TMP_Text: text="Inventory bottles (last 180d)" overflow=Overflow wrap=True
+    • AxisHint  [Text ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1048.00, 26.62) anchoredPos=(524.00, -53.19)
+       TMP_Text: text="weeks" overflow=Overflow wrap=True
+    • ChartArea  [Image HLG LE ]
+       Rect: anchorMin=(0.00, 1.00) anchorMax=(0.00, 1.00) pivot=(0.50, 0.50) sizeDelta=(1048.00, 160.00) anchoredPos=(524.00, -152.50)
+       Image: raycastTarget=True color=RGBA(0.920, 0.880, 0.840, 1.000)
+       HLG: padding=(16,16,16,16) spacing=12 controlW/H=False/False expandW/H=True/False
+       LE: min=(-1,160) pref=(-1,-1) flex=(-1,-1)

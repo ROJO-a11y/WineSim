@@ -34,7 +34,7 @@ MonoBehaviour:
   marketIndexMin: 0.8
   marketIndexMax: 1.2
   marketStepMax: 0.01
-  secondsPerDay: 0.5
+  secondsPerDay: 0.1
   daysPerYear: 360
   offlineCatchupCapDays: 30
   startYear: 2025

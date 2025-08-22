@@ -5716,7 +5716,7 @@ GameObject:
   - component: {fileID: 684591475}
   - component: {fileID: 684591474}
   - component: {fileID: 684591478}
-  - component: {fileID: 684591477}
+  - component: {fileID: 684591479}
   m_Layer: 0
   m_Name: ChartArea
   m_TagString: Untagged
@@ -5801,7 +5801,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 684591472}
   m_CullTransparentMesh: 1
---- !u!114 &684591477
+--- !u!114 &684591478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684591472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2db2f122b6e4eefb3c01945c72beea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  theme: {fileID: 11400000, guid: ab37c374b918246078301a6c0ea6ce6e, type: 2}
+  padOverride: -1
+--- !u!114 &684591479
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5827,20 +5841,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &684591478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 684591472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d2db2f122b6e4eefb3c01945c72beea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  theme: {fileID: 11400000, guid: ab37c374b918246078301a6c0ea6ce6e, type: 2}
-  padOverride: -1
 --- !u!1 &686889491
 GameObject:
   m_ObjectHideFlags: 0
@@ -7851,7 +7851,7 @@ GameObject:
   - component: {fileID: 894690967}
   - component: {fileID: 894690966}
   - component: {fileID: 894690970}
-  - component: {fileID: 894690969}
+  - component: {fileID: 894690971}
   m_Layer: 0
   m_Name: ChartArea
   m_TagString: Untagged
@@ -7936,7 +7936,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 894690964}
   m_CullTransparentMesh: 1
---- !u!114 &894690969
+--- !u!114 &894690970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894690964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2db2f122b6e4eefb3c01945c72beea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  theme: {fileID: 11400000, guid: ab37c374b918246078301a6c0ea6ce6e, type: 2}
+  padOverride: -1
+--- !u!114 &894690971
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7962,20 +7976,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &894690970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 894690964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d2db2f122b6e4eefb3c01945c72beea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  theme: {fileID: 11400000, guid: ab37c374b918246078301a6c0ea6ce6e, type: 2}
-  padOverride: -1
 --- !u!1 &910064090
 GameObject:
   m_ObjectHideFlags: 0
